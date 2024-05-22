@@ -1,78 +1,76 @@
 import 'package:flutter/material.dart';
+import 'bienvenida.dart'; // Importa la pantalla de bienvenida
 
 class RegistroCorreoScreen extends StatelessWidget {
+  final TextEditingController _emailController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF9333f3), // Fondo morado
       body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'REGÍSTRATE',
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'REGÍSTRATE',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 20),
+            TextField(
+              controller: _emailController,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white24,
+                labelText: 'Introducir correo',
+                labelStyle: TextStyle(color: Colors.white),
+                hintText: 'ejemplo@correo.com', // Aquí se añade el hint
+                hintStyle: TextStyle(color: Colors.white60), // Color del hint
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              style: TextStyle(color: Colors.white),
+              keyboardType: TextInputType.emailAddress,
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                if (_emailController.text.isNotEmpty) {
+                                    Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => BienvenidaScreen()),
+                  );
+                } else {
+                  // Muestra un mensaje de error si el correo está vacío
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Por favor, ingresa un correo válido')),
+                  );
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFFffc929), // Fondo amarillo
+                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: Text(
+                'Continuar',
                 style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF9333f3), // Texto morado
+                  fontSize: 16,
                 ),
               ),
-              SizedBox(height: 8),
-              // Obviar el texto de "Inicia sesión para continuar"
-              SizedBox(height: 16),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'CORREO',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-              SizedBox(height: 8),
-              TextField(
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white.withOpacity(0.1),
-                  hintText: 'jlara.montes@gmail.com',
-                  hintStyle: TextStyle(color: Colors.white.withOpacity(0.5)),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide.none,
-                  ),
-                  contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                ),
-                style: TextStyle(color: Colors.white),
-                keyboardType: TextInputType.emailAddress,
-              ),
-              SizedBox(height: 30),
-              ElevatedButton(
-                onPressed: () {
-                  // Acción para el botón de Login
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFFffc929), // Color de fondo del botón
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                child: Text(
-                  'Login',
-                  style: TextStyle(
-                    color: Color(0xFF9333f3), // Color del texto del botón
-                    fontSize: 18,
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
-
