@@ -35,7 +35,7 @@ class MainScreen extends StatelessWidget {
               
               Image.asset(
                 'assets/images/influagency_logo.png', // Asegúrate de tener esta imagen en tu carpeta de assets
-                height: 100,
+                height: 200,
               ),
               SizedBox(height: 50),
               Text(
