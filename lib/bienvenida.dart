@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/gestures.dart'; // Importa la biblioteca de gestos
+import 'package:flutter/gestures.dart';
+import 'comotellamas.dart'; // Importa la biblioteca de gestos
 
 class BienvenidaScreen extends StatelessWidget {
   @override
@@ -60,7 +61,10 @@ class BienvenidaScreen extends StatelessWidget {
             ),
             Center(
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: () {Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => NameInputScreen()), // Navega a la nueva pantalla
+                  );
                   // Acción cuando se presiona el botón "Acepto"
                 },
                 style: ElevatedButton.styleFrom(

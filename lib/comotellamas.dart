@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'InfluencerMarca.dart';
 
-class NameInputScreen extends StatelessWidget {
+class NameInputScreen extends StatefulWidget {
+  @override
+  _NameInputScreenState createState() => _NameInputScreenState();
+}
+
+class _NameInputScreenState extends State<NameInputScreen> {
   final TextEditingController _nameController = TextEditingController();
+  bool _isNameValid = false;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +40,11 @@ class NameInputScreen extends StatelessWidget {
             SizedBox(height: 20),
             TextField(
               controller: _nameController,
+              onChanged: (value) {
+                setState(() {
+                  _isNameValid = value.trim().isNotEmpty;
+                });
+              },
               decoration: InputDecoration(
                 hintText: 'Introduce tu nombre:',
                 hintStyle: TextStyle(color: Colors.white70),
@@ -49,6 +61,36 @@ class NameInputScreen extends StatelessWidget {
             Text(
               'Así es como se mostrará en tu perfil\nPODRÁS CAMBIARLO MÁS TARDE.',
               style: TextStyle(color: Colors.white),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                if (_nameController.text.isNotEmpty) {
+                                    Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => IfluencerMarca()),
+                  );
+                } else {
+                  // Muestra un mensaje de error si el correo está vacío
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Por favor, ingresa un nombre válido')),
+                  );
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFFffc929), // Fondo amarillo
+                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: Text(
+                'Continuar',
+                style: TextStyle(
+                  color: Color(0xFF9333f3), // Texto morado
+                  fontSize: 16,
+                ),
+              ),
             ),
           ],
         ),
