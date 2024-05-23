@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'registro_correo.dart'; // Importa la nueva pantalla
-
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 void main() {
   runApp(MyApp());
 }
