@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "886077325287",
+    "project_id": "influagency-bddba",
+    "storage_bucket": "influagency-bddba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:886077325287:android:79f7bf4eec4625f3580742",
+        "android_client_info": {
+          "package_name": "com.android.application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6U62zTamOAZs-qv18g6O1bwqRUxxPoXo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:886077325287:android:9dcfb382f2ab691c580742",
+        "android_client_info": {
+          "package_name": "com.influagency.influmeet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6U62zTamOAZs-qv18g6O1bwqRUxxPoXo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
