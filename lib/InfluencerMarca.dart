@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 class IfluencerMarca extends StatelessWidget {
+  const IfluencerMarca({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF9333f3), // Fondo morado
+      backgroundColor: const Color(0xFF9333f3), // Fondo morado
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -12,13 +14,13 @@ class IfluencerMarca extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               IconButton(
-                icon: Icon(Icons.arrow_back, color: Colors.white),
+                icon: const Icon(Icons.arrow_back, color: Colors.white),
                 onPressed: () {
                   Navigator.pop(context); // Regresa a la pantalla anterior
                 },
               ),
-              SizedBox(height: 20),
-              Center(
+              const SizedBox(height: 20),
+              const Center(
                 child: Text(
                   '¿ERES MARCA O\nERES INFLUENCER?',
                   textAlign: TextAlign.center,
@@ -29,7 +31,7 @@ class IfluencerMarca extends StatelessWidget {
                   ),
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               Center(
                 child: Column(
                   children: [
@@ -38,13 +40,13 @@ class IfluencerMarca extends StatelessWidget {
                         // Acción para el botón "Marca"
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFffc929), // Fondo amarillo
-                        padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                        backgroundColor: const Color(0xFFffc929), // Fondo amarillo
+                        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      child: Text(
+                      child: const Text(
                         '   Marca   ',
                         style: TextStyle(
                           color: Color(0xFF9333f3), // Texto morado
@@ -52,19 +54,19 @@ class IfluencerMarca extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () {
                         // Acción para el botón "Influencer"
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFffc929), // Fondo amarillo
-                        padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                        backgroundColor: const Color(0xFFffc929), // Fondo amarillo
+                        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      child: Text(
+                      child: const Text(
                         'Influencer',
                         style: TextStyle(
                           color: Color(0xFF9333f3), // Texto morado
@@ -75,7 +77,7 @@ class IfluencerMarca extends StatelessWidget {
                   ],
                 ),
               ),
-              Spacer(),
+              const Spacer(),
             ],
           ),
         ),

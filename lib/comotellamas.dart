@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'InfluencerMarca.dart';
 
 class NameInputScreen extends StatefulWidget {
+  const NameInputScreen({super.key});
+
   @override
   _NameInputScreenState createState() => _NameInputScreenState();
 }
@@ -13,12 +15,12 @@ class _NameInputScreenState extends State<NameInputScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF8E44AD), // Color de fondo morado
+      backgroundColor: const Color(0xFF8E44AD), // Color de fondo morado
       appBar: AppBar(
-        backgroundColor: Color(0xFF8E44AD), // Color de la AppBar morado
+        backgroundColor: const Color(0xFF8E44AD), // Color de la AppBar morado
         elevation: 0, // Sin sombra
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -29,7 +31,7 @@ class _NameInputScreenState extends State<NameInputScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               '¿CÓMO TE LLAMAS?',
               style: TextStyle(
                 color: Colors.white,
@@ -37,7 +39,7 @@ class _NameInputScreenState extends State<NameInputScreen> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextField(
               controller: _nameController,
               onChanged: (value) {
@@ -47,7 +49,7 @@ class _NameInputScreenState extends State<NameInputScreen> {
               },
               decoration: InputDecoration(
                 hintText: 'Introduce tu nombre:',
-                hintStyle: TextStyle(color: Colors.white70),
+                hintStyle: const TextStyle(color: Colors.white70),
                 filled: true,
                 fillColor: Colors.white24,
                 border: OutlineInputBorder(
@@ -55,36 +57,36 @@ class _NameInputScreenState extends State<NameInputScreen> {
                   borderSide: BorderSide.none,
                 ),
               ),
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
             ),
-            SizedBox(height: 20),
-            Text(
+            const SizedBox(height: 20),
+            const Text(
               'Así es como se mostrará en tu perfil\nPODRÁS CAMBIARLO MÁS TARDE.',
               style: TextStyle(color: Colors.white),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 if (_nameController.text.isNotEmpty) {
                                     Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => IfluencerMarca()),
+                    MaterialPageRoute(builder: (context) => const IfluencerMarca()),
                   );
                 } else {
                   // Muestra un mensaje de error si el correo está vacío
                                     ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Por favor, ingresa un nombre válido')),
+                    const SnackBar(content: Text('Por favor, ingresa un nombre válido')),
                   );
                 }
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFFffc929), // Fondo amarillo
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                backgroundColor: const Color(0xFFffc929), // Fondo amarillo
+                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              child: Text(
+              child: const Text(
                 'Continuar',
                 style: TextStyle(
                   color: Color(0xFF9333f3), // Texto morado
