@@ -6,6 +6,23 @@ plugins {
     id "com.google.gms.google-services"
 }
 
+android {
+    compileSdkVersion 33  // Asegúrate de usar la versión adecuada
+    defaultConfig {
+        applicationId "com.example.influagency"  // Usa tu ID de aplicación correcto
+        minSdkVersion 21
+        targetSdkVersion 33
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file("local.properties")
 if (localPropertiesFile.exists()) {
@@ -63,7 +80,8 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:32.3.1') 
 
     // Dependency for the Firebase Authentication 
-    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-auth: 21.0.6'
+    implementation 'com.google.android.gms:play-services-auth:20.1.0'
     implementation 'com.google.firebase:firebase-core'
     
 }

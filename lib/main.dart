@@ -2,32 +2,36 @@ import 'package:flutter/material.dart';
 import 'registro_correo.dart'; // Importa la nueva pantalla
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Influagency',
       theme: ThemeData(
-        primaryColor: Color(0xFF9333f3), // Morado
-        colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Color(0xFFffc929)), // Amarillo
+        primaryColor: const Color(0xFF9333f3), // Morado
+        colorScheme: ColorScheme.fromSwatch().copyWith(secondary: const Color(0xFFffc929)), // Amarillo
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MainScreen(),
+      home: const MainScreen(),
     );
   }
 }
 
 class MainScreen extends StatelessWidget {
+  const MainScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF9333f3), // Fondo morado
+      backgroundColor: const Color(0xFF9333f3), // Fondo morado
       body: Center(
         child: SingleChildScrollView(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             
@@ -37,18 +41,18 @@ class MainScreen extends StatelessWidget {
                 'assets/images/influagency_logo.png', // Asegúrate de tener esta imagen en tu carpeta de assets
                 height: 200,
               ),
-              SizedBox(height: 50),
-              Text(
+              const SizedBox(height: 50),
+              const Text(
                 'Al tocar en entrar, usted acepta nuestros Términos. Sepa cómo procesamos sus datos en nuestra Política de Privacidad y Política de cookies.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               RichText(
                 textAlign: TextAlign.center,
-                text: TextSpan(
+                text: const TextSpan(
                   children: [
                     TextSpan(
                       text: 'Términos',
@@ -86,7 +90,7 @@ class MainScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               ButtonWidget(
                 imagePath: 'assets/images/google_icon.png',
                 text: 'ENTRAR CON GOOGLE    ',
@@ -94,7 +98,7 @@ class MainScreen extends StatelessWidget {
                   // Acción para el botón de Google
                 },
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ButtonWidget(
                 imagePath: 'assets/images/correo_icon.png',
                 text: 'ENTRAR CON E-MAIL      ',
@@ -104,7 +108,7 @@ class MainScreen extends StatelessWidget {
                   );
                 },
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ButtonWidget(
                 imagePath: 'assets/images/facebook_icon.png',
                 text: 'ENTRAR CON FACEBOOK',
@@ -125,15 +129,15 @@ class ButtonWidget extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
 
-  ButtonWidget({required this.imagePath, required this.text, required this.onPressed});
+  const ButtonWidget({super.key, required this.imagePath, required this.text, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: Color(0xFFffc929), // Fondo amarillo
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        backgroundColor: const Color(0xFFffc929), // Fondo amarillo
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
@@ -144,12 +148,12 @@ class ButtonWidget extends StatelessWidget {
           Image.asset(
             imagePath,
             height: 24,
-            color: Color(0xFF9333f3),
+            color: const Color(0xFF9333f3),
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           Text(
             text,
-            style: TextStyle(
+            style: const TextStyle(
               color: Color(0xFF9333f3), // Texto morado
               fontSize: 16,
             ),

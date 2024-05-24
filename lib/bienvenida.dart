@@ -3,18 +3,20 @@ import 'package:flutter/gestures.dart';
 import 'comotellamas.dart'; // Importa la biblioteca de gestos
 
 class BienvenidaScreen extends StatelessWidget {
+  const BienvenidaScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF9333f3), // Fondo morado
+      backgroundColor: const Color(0xFF9333f3), // Fondo morado
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
             IconButton(
-              icon: Icon(Icons.close, color: Colors.white),
+              icon: const Icon(Icons.close, color: Colors.white),
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -25,8 +27,8 @@ class BienvenidaScreen extends StatelessWidget {
                 height: 100,
               ),
             ),
-            SizedBox(height: 20),
-            Center(
+            const SizedBox(height: 20),
+            const Center(
               child: Text(
                 'BIENVENIDO A INFLUAGENCY',
                 textAlign: TextAlign.center,
@@ -37,8 +39,8 @@ class BienvenidaScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 10),
-            Center(
+            const SizedBox(height: 10),
+            const Center(
               child: Text(
                 'Por favor, sigue nuestras normas internas',
                 textAlign: TextAlign.center,
@@ -48,7 +50,7 @@ class BienvenidaScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Expanded(
               child: ListView(
                 children: [
@@ -63,18 +65,18 @@ class BienvenidaScreen extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () {Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => NameInputScreen()), // Navega a la nueva pantalla
+                    MaterialPageRoute(builder: (context) => const NameInputScreen()), // Navega a la nueva pantalla
                   );
                   // Acción cuando se presiona el botón "Acepto"
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFFffc929), // Fondo amarillo
-                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                  backgroundColor: const Color(0xFFffc929), // Fondo amarillo
+                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                child: Text(
+                child: const Text(
                   'Acepto',
                   style: TextStyle(
                     color: Color(0xFF9333f3), // Texto morado
@@ -83,7 +85,7 @@ class BienvenidaScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
           ],
         ),
       ),
@@ -98,7 +100,7 @@ class BienvenidaScreen extends StatelessWidget {
           children: [
             TextSpan(
               text: '$title\n',
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
@@ -106,7 +108,7 @@ class BienvenidaScreen extends StatelessWidget {
             ),
             TextSpan(
               text: description,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 16,
               ),
