@@ -60,9 +60,19 @@ flutter {
 
 dependencies {
     // BoM for the Firebase platform
+<<<<<<< HEAD
     implementation platform('com.google.firebase:firebase-bom:32.3.1')
 
     // Dependency for the Firebase Authentication
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.android.gms:play-services-auth:20.5.0'
 }
+=======
+    implementation platform('com.google.firebase:firebase-bom:32.3.1') 
+
+    // Dependency for the Firebase Authentication 
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-core'
+    
+}
+>>>>>>> c781d02677684d3b1761e132f7277b3c1db3c679

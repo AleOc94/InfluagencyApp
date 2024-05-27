@@ -5,6 +5,8 @@ import 'bienvenida.dart'; // Importa la pantalla de bienvenida
 class RegistroCorreoScreen extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
 
+  RegistroCorreoScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
