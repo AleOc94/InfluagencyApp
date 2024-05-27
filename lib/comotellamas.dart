@@ -12,8 +12,6 @@ class _NameInputScreenState extends State<NameInputScreen> {
   final TextEditingController _nameController = TextEditingController();
   bool _isNameValid = false;
 
-  NameInputScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,13 +68,13 @@ class _NameInputScreenState extends State<NameInputScreen> {
             ElevatedButton(
               onPressed: () {
                 if (_nameController.text.isNotEmpty) {
-                                    Navigator.push(
+                  Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const IfluencerMarca()),
                   );
                 } else {
-                  // Muestra un mensaje de error si el correo está vacío
-                                    ScaffoldMessenger.of(context).showSnackBar(
+                  // Muestra un mensaje de error si el nombre está vacío
+                  ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Por favor, ingresa un nombre válido')),
                   );
                 }

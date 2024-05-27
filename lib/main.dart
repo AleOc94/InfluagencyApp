@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'registro_correo.dart'; // Importa la nueva pantalla
-import 'firebase_options.dart'; // Importa las opciones de Firebase
+import 'firebase_options.dart';
 
-<<<<<<< HEAD
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
@@ -16,18 +15,12 @@ void main() async {
     print('Error initializing Firebase: $error'); // Mensaje de depuración
   }
 
-=======
-void main() {
->>>>>>> c781d02677684d3b1761e132f7277b3c1db3c679
   runApp(const MyApp());
 }
 
+
 class MyApp extends StatelessWidget {
-<<<<<<< HEAD
   const MyApp({Key? key});
-=======
-  const MyApp({super.key});
->>>>>>> c781d02677684d3b1761e132f7277b3c1db3c679
 
   @override
   Widget build(BuildContext context) {
@@ -44,11 +37,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MainScreen extends StatelessWidget {
-<<<<<<< HEAD
   const MainScreen({Key? key});
-=======
-  const MainScreen({super.key});
->>>>>>> c781d02677684d3b1761e132f7277b3c1db3c679
 
   @override
   Widget build(BuildContext context) {
@@ -153,11 +142,7 @@ class ButtonWidget extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
 
-<<<<<<< HEAD
   const ButtonWidget({Key? key, required this.imagePath, required this.text, required this.onPressed});
-=======
-  const ButtonWidget({super.key, required this.imagePath, required this.text, required this.onPressed});
->>>>>>> c781d02677684d3b1761e132f7277b3c1db3c679
 
   @override
   Widget build(BuildContext context) {
