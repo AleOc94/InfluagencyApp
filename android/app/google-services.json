@@ -7,28 +7,6 @@
   "client": [
     {
       "client_info": {
-<<<<<<< HEAD
-=======
-        "mobilesdk_app_id": "1:886077325287:android:79f7bf4eec4625f3580742",
-        "android_client_info": {
-          "package_name": "com.android.application"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyC6U62zTamOAZs-qv18g6O1bwqRUxxPoXo"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
->>>>>>> c781d02677684d3b1761e132f7277b3c1db3c679
         "mobilesdk_app_id": "1:886077325287:android:9dcfb382f2ab691c580742",
         "android_client_info": {
           "package_name": "com.influagency.influmeet"

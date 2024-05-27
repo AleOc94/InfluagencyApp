@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'demo_swip.dart';
 
 class IfluencerMarca extends StatelessWidget {
   const IfluencerMarca({super.key});
@@ -39,7 +40,10 @@ class IfluencerMarca extends StatelessWidget {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        // Acción para el botón "Marca"
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => DemoSwipe()), // Navega a la nueva pantalla
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFFffc929), // Fondo amarillo

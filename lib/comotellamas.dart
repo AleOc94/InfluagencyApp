@@ -15,9 +15,9 @@ class _NameInputScreenState extends State<NameInputScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF8E44AD), // Color de fondo morado
+      backgroundColor: const Color(0xFF9333f3), // Color de fondo morado
       appBar: AppBar(
-        backgroundColor: const Color(0xFF8E44AD), // Color de la AppBar morado
+        backgroundColor: const Color(0xFF9333f3), // Color de la AppBar morado
         elevation: 0, // Sin sombra
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
