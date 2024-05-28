@@ -10,7 +10,7 @@ class RegistroCorreoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF9333f3), // Fondo morado
+      backgroundColor: const Color.fromARGB(255, 133, 25, 240), // Fondo morado
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -56,7 +56,7 @@ class RegistroCorreoScreen extends StatelessWidget {
                 }
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFffc929), // Fondo amarillo
+                backgroundColor: const Color.fromARGB(255, 255, 214, 90), // Fondo amarillo
                 padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
@@ -65,7 +65,7 @@ class RegistroCorreoScreen extends StatelessWidget {
               child: const Text(
                 'Continuar',
                 style: TextStyle(
-                  color: Color(0xFF9333f3), // Texto morado
+                  color: Color.fromARGB(255, 133, 25, 240), // Texto morado
                   fontSize: 16,
                 ),
               ),

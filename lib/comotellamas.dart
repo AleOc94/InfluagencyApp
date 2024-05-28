@@ -15,9 +15,9 @@ class _NameInputScreenState extends State<NameInputScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF9333f3), // Color de fondo morado
+      backgroundColor: const Color.fromARGB(255, 133, 25, 240), // Color de fondo morado
       appBar: AppBar(
-        backgroundColor: const Color(0xFF9333f3), // Color de la AppBar morado
+        backgroundColor: const Color.fromARGB(255, 133, 25, 240), // Color de la AppBar morado
         elevation: 0, // Sin sombra
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -80,7 +80,7 @@ class _NameInputScreenState extends State<NameInputScreen> {
                 }
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFffc929), // Fondo amarillo
+                backgroundColor: const Color.fromARGB(255, 255, 214, 90), // Fondo amarillo
                 padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
@@ -89,7 +89,7 @@ class _NameInputScreenState extends State<NameInputScreen> {
               child: const Text(
                 'Continuar',
                 style: TextStyle(
-                  color: Color(0xFF9333f3), // Texto morado
+                  color:  Color.fromARGB(255, 133, 25, 240), // Texto morado
                   fontSize: 16,
                 ),
               ),

@@ -27,8 +27,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Influagency',
       theme: ThemeData(
-        primaryColor: const Color(0xFF9333f3), // Morado
-        colorScheme: ColorScheme.fromSwatch().copyWith(secondary: const Color(0xFFffc929)), // Amarillo
+        primaryColor: const Color.fromARGB(255, 133, 25, 240), // Morado
+        colorScheme: ColorScheme.fromSwatch().copyWith(secondary: const Color.fromARGB(255, 255, 214, 90)), // Amarillo
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: const MainScreen(),
@@ -42,7 +42,7 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF9333f3), // Fondo morado
+      backgroundColor: const Color.fromARGB(255, 133, 25, 240), // Fondo morado
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
@@ -149,7 +149,7 @@ class ButtonWidget extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFFffc929), // Fondo amarillo
+        backgroundColor: const Color.fromARGB(255, 255, 214, 90), // Fondo amarillo
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
@@ -167,7 +167,7 @@ class ButtonWidget extends StatelessWidget {
           Text(
             text,
             style: const TextStyle(
-              color: Color(0xFF9333f3), // Texto morado
+              color: Color.fromARGB(255, 133, 25, 240), // Texto morado
               fontSize: 16,
             ),
           ),

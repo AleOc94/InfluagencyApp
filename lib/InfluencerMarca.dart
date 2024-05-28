@@ -9,7 +9,7 @@ class IfluencerMarca extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF9333f3), // Fondo morado
+      backgroundColor: const Color.fromARGB(255, 133, 25, 240), // Fondo morado
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -46,7 +46,7 @@ class IfluencerMarca extends StatelessWidget {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFffc929), // Fondo amarillo
+                        backgroundColor: const Color.fromARGB(255, 255, 214, 90), // Fondo amarillo
                         padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
@@ -55,7 +55,7 @@ class IfluencerMarca extends StatelessWidget {
                       child: const Text(
                         '   Marca   ',
                         style: TextStyle(
-                          color: Color(0xFF9333f3), // Texto morado
+                          color: Color.fromARGB(255, 133, 25, 240), // Texto morado
                           fontSize: 16,
                         ),
                       ),
@@ -66,7 +66,7 @@ class IfluencerMarca extends StatelessWidget {
                         // Acción para el botón "Influencer"
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFffc929), // Fondo amarillo
+                        backgroundColor: const Color.fromARGB(255, 255, 214, 90), // Fondo amarillo
                         padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
@@ -75,7 +75,7 @@ class IfluencerMarca extends StatelessWidget {
                       child: const Text(
                         'Influencer',
                         style: TextStyle(
-                          color: Color(0xFF9333f3), // Texto morado
+                          color: Color.fromARGB(255, 133, 25, 240), // Texto morado
                           fontSize: 16,
                         ),
                       ),

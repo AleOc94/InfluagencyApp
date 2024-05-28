@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
+import 'package:flip_card/flip_card.dart';
 
 void main() => runApp(MyApp());
 
@@ -22,6 +23,12 @@ class _DemoSwipeState extends State<DemoSwipe> {
     'assets/images/jp.png',
     'assets/images/hg.png',
     'assets/images/EM.jpeg',
+  ];
+
+  List<String> descriptions = [
+    'Descripción de JP',
+    'Descripción de HG',
+    'Descripción de EM',
   ];
 
   @override
@@ -48,8 +55,26 @@ class _DemoSwipeState extends State<DemoSwipe> {
           children: <Widget>[
             Swiper(
               itemBuilder: (BuildContext context, int index) {
-                return Card(
-                  child: Image.asset(images[index], fit: BoxFit.cover),
+                return FlipCard(
+                  direction: FlipDirection.HORIZONTAL, // Dirección de voltear
+                  front: Card(
+                    child: Image.asset(images[index], fit: BoxFit.cover),
+                  ),
+                  back: Card(
+                    color: Colors.white,
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Text(
+                          descriptions[index],
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 );
               },
               itemCount: images.length,
@@ -61,10 +86,10 @@ class _DemoSwipeState extends State<DemoSwipe> {
               alignment: Alignment.bottomLeft,
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: Icon(
-                  Icons.arrow_back,
-                  color: Colors.green,
-                  size: 50.0,
+                child: Image.asset(
+                  'assets/images/like_icon.png', // Usa la imagen personalizada
+                  width: 75.0,
+                  height: 75.0,
                 ),
               ),
             ),
@@ -72,10 +97,11 @@ class _DemoSwipeState extends State<DemoSwipe> {
               alignment: Alignment.bottomCenter,
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: Icon(
-                  Icons.check_circle,
-                  color: Colors.blue,
-                  size: 50.0,
+                child: Image.asset(
+                  'assets/images/arrow_back.png', // Usa la imagen personalizada
+                  color: Colors.white,
+                  width: 75.0,
+                  height: 75.0,
                 ),
               ),
             ),
@@ -83,10 +109,10 @@ class _DemoSwipeState extends State<DemoSwipe> {
               alignment: Alignment.bottomRight,
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: Icon(
-                  Icons.cancel,
-                  color: Colors.red,
-                  size: 50.0,
+                child: Image.asset(
+                  'assets/images/dislike_icon.png', // Usa la imagen personalizada
+                  width: 75.0,
+                  height: 75.0,
                 ),
               ),
             ),
@@ -128,4 +154,3 @@ class SettingsPage extends StatelessWidget {
     );
   }
 }
-
