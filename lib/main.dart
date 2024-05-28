@@ -161,7 +161,7 @@ class ButtonWidget extends StatelessWidget {
           Image.asset(
             imagePath,
             height: 24,
-            color: const Color(0xFF9333f3),
+           
           ),
           const SizedBox(width: 10),
           Text(

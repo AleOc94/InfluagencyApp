@@ -29,7 +29,7 @@ class _DemoSwipeState extends State<DemoSwipe> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Swipe Example'),
-        backgroundColor: Colors.amber,
+        backgroundColor: Color.fromARGB(255, 255, 214, 90),
         actions: [
           IconButton(
             icon: Icon(Icons.settings),
@@ -43,7 +43,7 @@ class _DemoSwipeState extends State<DemoSwipe> {
         ],
       ),
       body: Container(
-        color: Color(0xFF9333f3), // Fondo morado
+        color: Color.fromARGB(255, 133, 25, 240), // Fondo morado
         child: Stack(
           children: <Widget>[
             Swiper(
@@ -90,27 +90,6 @@ class _DemoSwipeState extends State<DemoSwipe> {
                 ),
               ),
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 80.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Icon(
-                      Icons.favorite,
-                      color: Colors.red,
-                      size: 50.0,
-                    ),
-                    Icon(
-                      Icons.thumb_down,
-                      color: Colors.blue,
-                      size: 50.0,
-                    ),
-                  ],
-                ),
-              ),
-            ),
           ],
         ),
       ),
@@ -130,7 +109,7 @@ class _DemoSwipeState extends State<DemoSwipe> {
           ),
         ],
         selectedItemColor: Colors.white,
-        backgroundColor: Color(0xFFffc929),
+        backgroundColor: Color.fromARGB(255, 255, 214, 90),
       ),
     );
   }
