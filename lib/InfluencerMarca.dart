@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'demo_swip.dart';
+import 'swipeoInfluencers.dart';
 
 class IfluencerMarca extends StatelessWidget {
   const IfluencerMarca({super.key});
@@ -63,6 +64,10 @@ class IfluencerMarca extends StatelessWidget {
                     const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () {
+                         Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SwipeoInfluencers()),
+                         );
                         // Acción para el botón "Influencer"
                       },
                       style: ElevatedButton.styleFrom(
