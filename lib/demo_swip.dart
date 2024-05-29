@@ -84,10 +84,10 @@ class _DemoSwipeState extends State<DemoSwipe> {
             ),
             Align(
               alignment: Alignment.bottomLeft,
-              child: Padding(
+             child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Image.asset(
-                  'assets/images/like_icon.png', // Usa la imagen personalizada
+                  'assets/images/dislike_icon.png', // Usa la imagen personalizada
                   width: 75.0,
                   height: 75.0,
                 ),
@@ -107,10 +107,10 @@ class _DemoSwipeState extends State<DemoSwipe> {
             ),
             Align(
               alignment: Alignment.bottomRight,
-              child: Padding(
+               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Image.asset(
-                  'assets/images/dislike_icon.png', // Usa la imagen personalizada
+                  'assets/images/like_icon.png', // Usa la imagen personalizada
                   width: 75.0,
                   height: 75.0,
                 ),
