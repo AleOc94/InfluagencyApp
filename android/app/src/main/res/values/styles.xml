@@ -18,5 +18,6 @@
     <string name="app_name">Influagency</string>
     <string name="facebook_app_id">1129568994915298</string>
     <string name="fb_login_protocol_scheme">fb1129568994915298</string>
+    <string name="facebook_client_token">c4642aa28807caab614ab111a88ccdb8</string>
     
 </resources>
