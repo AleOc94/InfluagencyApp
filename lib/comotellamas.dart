@@ -10,7 +10,6 @@ class NameInputScreen extends StatefulWidget {
 
 class _NameInputScreenState extends State<NameInputScreen> {
   final TextEditingController _nameController = TextEditingController();
-  bool _isNameValid = false;
 
   @override
   Widget build(BuildContext context) {
@@ -42,11 +41,6 @@ class _NameInputScreenState extends State<NameInputScreen> {
             const SizedBox(height: 20),
             TextField(
               controller: _nameController,
-              onChanged: (value) {
-                setState(() {
-                  _isNameValid = value.trim().isNotEmpty;
-                });
-              },
               decoration: InputDecoration(
                 hintText: 'Introduce tu nombre:',
                 hintStyle: const TextStyle(color: Colors.white70),
@@ -89,7 +83,7 @@ class _NameInputScreenState extends State<NameInputScreen> {
               child: const Text(
                 'Continuar',
                 style: TextStyle(
-                  color:  Color.fromARGB(255, 133, 25, 240), // Texto morado
+                  color: Color.fromARGB(255, 133, 25, 240), // Texto morado
                   fontSize: 16,
                 ),
               ),
@@ -100,3 +94,4 @@ class _NameInputScreenState extends State<NameInputScreen> {
     );
   }
 }
+
