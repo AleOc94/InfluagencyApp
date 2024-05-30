@@ -16,6 +16,11 @@ dependencies:
   cupertino_icons: ^1.0.6
   flutter_swiper_null_safety: ^1.0.2  # Añadida dependencia para la funcionalidad de swipe
   flip_card: ^0.7.0
+  flutter_facebook_auth: ^7.0.0
+  permission_handler: ^9.0.0
+  awesome_notifications: ^0.9.3
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
 
 dev_dependencies:
   flutter_test:

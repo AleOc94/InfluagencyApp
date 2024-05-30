@@ -12,7 +12,20 @@
           "package_name": "com.influagency.influmeet"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "886077325287-18568fkhlp28veffv345qokoi28mvak2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.influagency.influmeet",
+            "certificate_hash": "114136fee64c6c8a1ff6ebd75881d6133495b495"
+          }
+        },
+        {
+          "client_id": "886077325287-a9l7blhjftse5l1odlu83dvihu92idip.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyC6U62zTamOAZs-qv18g6O1bwqRUxxPoXo"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "886077325287-a9l7blhjftse5l1odlu83dvihu92idip.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "886077325287-t1o3serh8d449bvaqaomkdsafus45990.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.influmeet"
+              }
+            }
+          ]
         }
       }
     }
