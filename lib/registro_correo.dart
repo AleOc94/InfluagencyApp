@@ -1,14 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:influmeet/bienvenida.dart';
-import 'package:influmeet/iniciarsesion.dart'; // Importa la pantalla de iniciar sesión
-import 'package:flutter/gestures.dart'; // Importa gestos
+import 'base_datos.dart';
+import 'bienvenida.dart';
+import 'iniciarsesion.dart';
+import 'package:flutter/gestures.dart';
 
-class RegistroCorreoScreen extends StatelessWidget {
+// Definición del enum TipoUsuario
+enum TipoUsuario {
+  marca,
+  influencer,
+}
+
+class RegistroCorreoScreen extends StatefulWidget {
+  RegistroCorreoScreen({Key? key}) : super(key: key);
+
+  @override
+  _RegistroCorreoScreenState createState() => _RegistroCorreoScreenState();
+}
+
+class _RegistroCorreoScreenState extends State<RegistroCorreoScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
-  RegistroCorreoScreen({super.key});
+  TipoUsuario _tipoUsuarioSeleccionado = TipoUsuario.influencer; // Valor predeterminado
 
   @override
   Widget build(BuildContext context) {
@@ -62,12 +75,32 @@ class RegistroCorreoScreen extends StatelessWidget {
               obscureText: true,
             ),
             const SizedBox(height: 20),
+            DropdownButton<TipoUsuario>(
+              value: _tipoUsuarioSeleccionado,
+              dropdownColor: const Color.fromARGB(255, 133, 25, 240),
+              items: const [
+                DropdownMenuItem(
+                  value: TipoUsuario.marca,
+                  child: Text('Marca', style: TextStyle(color: Colors.white)),
+                ),
+                DropdownMenuItem(
+                  value: TipoUsuario.influencer,
+                  child: Text('Influencer', style: TextStyle(color: Colors.white)),
+                ),
+              ],
+              onChanged: (TipoUsuario? newValue) {
+                setState(() {
+                  _tipoUsuarioSeleccionado = newValue!;
+                });
+              },
+            ),
+            const SizedBox(height: 20),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
                   if (_emailController.text.isNotEmpty) {
-                    _crearUsuarioConCorreo(context, _emailController.text);
+                    _crearUsuarioConCorreo(context, _emailController.text, _tipoUsuarioSeleccionado);
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Por favor, ingresa un correo válido')),
@@ -120,13 +153,16 @@ class RegistroCorreoScreen extends StatelessWidget {
     );
   }
 
-  void _crearUsuarioConCorreo(BuildContext context, String email) {
+  void _crearUsuarioConCorreo(BuildContext context, String email, TipoUsuario tipoUsuario) {
     FirebaseAuth.instance
         .createUserWithEmailAndPassword(
       email: email,
-      password: _passwordController.text, // Utiliza la contraseña del campo de texto
+      password: _passwordController.text,
     )
         .then((userCredential) {
+      // Llama al método para guardar los datos del usuario en Firestore
+      _guardarDatosUsuario(context, email, tipoUsuario);
+      // Envía el correo de verificación
       userCredential.user?.sendEmailVerification().then((_) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Se ha enviado un correo de verificación')),
@@ -140,7 +176,7 @@ class RegistroCorreoScreen extends StatelessWidget {
       if (error is FirebaseAuthException && error.code == 'email-already-in-use') {
         FirebaseAuth.instance.signInWithEmailAndPassword(
           email: email,
-          password: _passwordController.text, // Utiliza la contraseña del campo de texto
+          password: _passwordController.text,
         ).then((userCredential) {
           if (userCredential.user!.emailVerified) {
             Navigator.pushReplacement(
@@ -163,5 +199,13 @@ class RegistroCorreoScreen extends StatelessWidget {
         );
       }
     });
+  }
+
+  void _guardarDatosUsuario(BuildContext context, String email, TipoUsuario tipoUsuario) {
+    String nombreColeccion = tipoUsuario == TipoUsuario.marca ? 'marcas' : 'influencers';
+    Map<String, dynamic> userData = {
+      'email': email,
+    };
+    BaseDatos().guardarDatosUsuario(email, email, nombreColeccion);
   }
 }

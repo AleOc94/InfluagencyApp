@@ -1,14 +1,22 @@
-// ignore_for_file: file_names
-
 import 'package:flutter/material.dart';
 import 'demo_swip.dart';
 import 'swipeoInfluencers.dart';
+import 'base_datos.dart'; // Importa la clase BaseDatos donde se define guardarDatosUsuario
+
+enum TipoUsuario {
+  influencer,
+  marca,
+}
 
 class IfluencerMarca extends StatelessWidget {
-  const IfluencerMarca({super.key});
+  const IfluencerMarca({Key? key, required this.correoUsuario}) : super(key: key);
+
+  final String correoUsuario;
 
   @override
   Widget build(BuildContext context) {
+    TipoUsuario tipoUsuarioSeleccionado = TipoUsuario.influencer; // Inicializa el tipo de usuario seleccionado como influencer
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 133, 25, 240), // Fondo morado
       body: SafeArea(
@@ -41,9 +49,11 @@ class IfluencerMarca extends StatelessWidget {
                   children: [
                     ElevatedButton(
                       onPressed: () {
+                        tipoUsuarioSeleccionado = TipoUsuario.marca; // Selecciona el tipo de usuario como marca
+                        _guardarDatosUsuario(context, tipoUsuarioSeleccionado, correoUsuario);
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => DemoSwipe()), // Navega a la nueva pantalla
+                          MaterialPageRoute(builder: (context) => DemoSwipe()),
                         );
                       },
                       style: ElevatedButton.styleFrom(
@@ -64,11 +74,12 @@ class IfluencerMarca extends StatelessWidget {
                     const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () {
-                         Navigator.push(
+                        tipoUsuarioSeleccionado = TipoUsuario.influencer; // Selecciona el tipo de usuario como influencer
+                        _guardarDatosUsuario(context, tipoUsuarioSeleccionado, correoUsuario);
+                        Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => SwipeoInfluencers()),
-                         );
-                        // Acción para el botón "Influencer"
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color.fromARGB(255, 255, 214, 90), // Fondo amarillo
@@ -94,5 +105,20 @@ class IfluencerMarca extends StatelessWidget {
         ),
       ),
     );
+  }
+
+ void _guardarDatosUsuario(BuildContext context, TipoUsuario tipoUsuario, String correoUsuario) {
+    // Determina la colección según el tipo de usuario
+    String nombreColeccion = tipoUsuario == TipoUsuario.marca ? 'marcas' : 'influencers';
+
+    // Crea un mapa con los datos del usuario
+    Map<String, dynamic> userData = {
+      'nombre': correoUsuario,
+      'correo': correoUsuario,
+      // Otros campos necesarios
+    };
+
+    // Llama al método para guardar los datos en Firestore
+    BaseDatos().guardarDatosUsuario(correoUsuario, correoUsuario, nombreColeccion);
   }
 }

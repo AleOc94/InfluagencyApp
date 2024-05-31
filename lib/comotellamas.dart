@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'InfluencerMarca.dart';
+import 'package:influmeet/InfluencerMarca.dart';
+import 'package:influmeet/registro_correo.dart';
+import 'base_datos.dart'; // Importa la clase BaseDatos donde se define guardarDatosUsuario
 
 class NameInputScreen extends StatefulWidget {
-  const NameInputScreen({super.key});
+  const NameInputScreen({Key? key}) : super(key: key);
 
   @override
   _NameInputScreenState createState() => _NameInputScreenState();
@@ -62,9 +64,10 @@ class _NameInputScreenState extends State<NameInputScreen> {
             ElevatedButton(
               onPressed: () {
                 if (_nameController.text.isNotEmpty) {
+                  _guardarDatosUsuario(context, _nameController.text);
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const IfluencerMarca()),
+                    MaterialPageRoute(builder: (context) => IfluencerMarca(correoUsuario: _nameController.text)), // Corrección aquí
                   );
                 } else {
                   // Muestra un mensaje de error si el nombre está vacío
@@ -92,6 +95,10 @@ class _NameInputScreenState extends State<NameInputScreen> {
         ),
       ),
     );
+  }
+
+  void _guardarDatosUsuario(BuildContext context, String nombreUsuario) {
+    BaseDatos().guardarDatosUsuario(nombreUsuario, _nameController.text, ''); // Cambio en el llamado de la función
   }
 }
 

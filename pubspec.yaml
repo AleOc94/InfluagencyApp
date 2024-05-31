@@ -21,6 +21,7 @@ dependencies:
   awesome_notifications: ^0.9.3
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  cloud_firestore: ^4.17.5
 
 dev_dependencies:
   flutter_test:
