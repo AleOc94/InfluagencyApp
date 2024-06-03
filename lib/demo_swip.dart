@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:tcard/tcard.dart';
 import 'package:flip_card/flip_card.dart';
 
 void main() => runApp(MyApp());
@@ -31,60 +32,120 @@ class _DemoSwipeState extends State<DemoSwipe> {
     'Descripción de EM',
   ];
 
-  List<Map<String, String>> swipedImages = [];
-  int currentIndex = 0;
-  String? message;
+  List<Widget> cards = [];
+  TCardController _controller = TCardController();
+  bool noMoreCards = false;
+  bool canGoBack = false; // Para controlar si se puede volver a la tarjeta anterior
+  int currentIndex = 0; // Índice de la tarjeta actual
 
-  void likeImage() {
-    if (currentIndex < images.length) {
-      setLastSwiped('like', images[currentIndex], descriptions[currentIndex]);
-      setState(() {
-        images.removeAt(currentIndex);
-        descriptions.removeAt(currentIndex);
-        showMessage('Estás interesado en este influencer');
-      });
+  @override
+  void initState() {
+    super.initState();
+    cards = List.generate(
+      images.length,
+      (index) => FlipCard(
+        direction: FlipDirection.HORIZONTAL,
+        front: Stack(
+          children: [
+            Card(
+              margin: EdgeInsets.all(0), // Eliminar margen para el borde blanco
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Image.asset(images[index], fit: BoxFit.cover),
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              top: 10,
+              right: 10,
+              child: Icon(
+                Icons.info,
+                color: Colors.white,
+                size: 30,
+              ),
+            ),
+          ],
+        ),
+        back: Stack(
+          children: [
+            Card(
+              margin: EdgeInsets.all(0), // Eliminar margen para el borde blanco
+              color: Colors.white,
+              child: Center(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Text(
+                    descriptions[index],
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              top: 10,
+              right: 10,
+              child:  SizedBox(
+                                width: 30,
+                                height: 30,
+                                child: Image.asset('assets/images/information_icon.png'),
+                              ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void handleSwipe(bool isLiked) {
+    if (isLiked) {
+      Fluttertoast.showToast(
+        msg: "Estás interesado en este Influencer.",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 3,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    } else {
+      Fluttertoast.showToast(
+        msg: "No estás interesado en este Influencer.",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 3,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
     }
-  }
-
-  void dislikeImage() {
-    if (currentIndex < images.length) {
-      setLastSwiped('dislike', images[currentIndex], descriptions[currentIndex]);
-      setState(() {
-        images.removeAt(currentIndex);
-        descriptions.removeAt(currentIndex);
-        showMessage('No estás interesado en este influencer');
-      });
-    }
-  }
-
-  void setLastSwiped(String action, String image, String description) {
-    swipedImages.add({'action': action, 'image': image, 'description': description});
-  }
-
-  void goBack() {
-    if (swipedImages.isNotEmpty) {
-      final lastSwiped = swipedImages.removeLast();
-      setState(() {
-        images.insert(0, lastSwiped['image']!);
-        descriptions.insert(0, lastSwiped['description']!);
-        showMessage('Has vuelto a la imagen anterior');
-      });
-    }
-  }
-
-  void showMessage(String msg) {
     setState(() {
-      message = msg;
+      canGoBack = true; // Permitir volver a la tarjeta actual
+      currentIndex++;
+      if (currentIndex >= cards.length) {
+        noMoreCards = true;
+      }
     });
-    Future.delayed(Duration(seconds: 3), () {
+  }
+
+  void handleGoBack() {
+    if (currentIndex > 0) {
       setState(() {
-        message = null;
+        currentIndex--;
+        canGoBack = false; // No permitir volver a la tarjeta actual nuevamente
       });
-    });
+      _controller.back();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final double spacing = 20.0; // Espacio uniforme entre los elementos
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Swipe Example'),
@@ -95,7 +156,7 @@ class _DemoSwipeState extends State<DemoSwipe> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SettingsPage()), // Navega a la nueva pantalla
+                MaterialPageRoute(builder: (context) => SettingsPage()),
               );
             },
           ),
@@ -103,102 +164,87 @@ class _DemoSwipeState extends State<DemoSwipe> {
       ),
       body: Container(
         color: Color.fromARGB(255, 133, 25, 240), // Fondo morado
-        child: Stack(
-          children: <Widget>[
-            if (images.isNotEmpty)
-              Swiper(
-                itemBuilder: (BuildContext context, int index) {
-                  return FlipCard(
-                    direction: FlipDirection.HORIZONTAL, // Dirección de voltear
-                    front: Card(
-                      child: Image.asset(images[index], fit: BoxFit.cover),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(height: spacing), // Espacio debajo del AppBar
+            noMoreCards
+                ? Center(
+                    child: Text(
+                      "Por el momento no hay más influencers.",
+                      style: TextStyle(color: Colors.white, fontSize: 20.0),
+                      textAlign: TextAlign.center,
                     ),
-                    back: Card(
-                      color: Colors.white,
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Text(
-                            descriptions[index],
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              color: Colors.black,
-                            ),
-                          ),
+                  )
+                : Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        height: MediaQuery.of(context).size.height * 0.55,
+                        child: TCard(
+                          controller: _controller,
+                          size: Size(MediaQuery.of(context).size.width * 0.85,
+                              MediaQuery.of(context).size.height * 0.55), // Reducir tamaño de la tarjeta
+                          cards: cards,
+                          onForward: (index, info) {
+                            if (info.direction == SwipDirection.Right) {
+                              handleSwipe(true);
+                            } else if (info.direction == SwipDirection.Left) {
+                              handleSwipe(false);
+                            }
+                          },
+                          onEnd: () {
+                            setState(() {
+                              noMoreCards = true;
+                            });
+                          },
                         ),
                       ),
-                    ),
-                  );
-                },
-                itemCount: images.length,
-                itemWidth: MediaQuery.of(context).size.width * 0.9,
-                itemHeight: MediaQuery.of(context).size.height * 0.6,
-                layout: SwiperLayout.STACK,
-                onIndexChanged: (index) {
-                  if (index < currentIndex) {
-                    dislikeImage();
-                  } else if (index > currentIndex) {
-                    likeImage();
-                  }
-                  setState(() {
-                    currentIndex = index;
-                  });
-                },
-              ),
-            if (message != null)
-              Positioned(
-                bottom: 150,
-                left: 0,
-                right: 0,
-                child: Container(
-                  color: Colors.black54,
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text(
-                    message!,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18.0,
-                    ),
-                    textAlign: TextAlign.center,
+                      SizedBox(height: spacing), // Espacio entre la tarjeta y los iconos
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            IconButton(
+                              icon: SizedBox(
+                                width: 50,
+                                height: 50,
+                                child: Image.asset('assets/images/dislike_icon.png'),
+                              ),
+                              onPressed: () {
+                                handleSwipe(false);
+                                _controller.forward();
+                              },
+                            ),
+                            IconButton(
+                              icon: SizedBox(
+                                width: 50,
+                                height: 50,
+                                child: Image.asset('assets/images/arrow_back.png'),
+                              ),
+                              onPressed: canGoBack
+                                  ? () {
+                                      handleGoBack();
+                                    }
+                                  : null,
+                            ),
+                            IconButton(
+                              icon: SizedBox(
+                                width: 50,
+                                height: 50,
+                                child: Image.asset('assets/images/like_icon.png'),
+                              ),
+                              onPressed: () {
+                                handleSwipe(true);
+                                _controller.forward();
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    GestureDetector(
-                      onTap: dislikeImage,
-                      child: Image.asset(
-                        'assets/images/dislike_icon.png', // Usa la imagen personalizada
-                        width: 75.0,
-                        height: 75.0,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: goBack,
-                      child: Image.asset(
-                        'assets/images/arrow_back.png', // Usa la imagen personalizada
-                        color: Colors.white,
-                        width: 75.0,
-                        height: 75.0,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: likeImage,
-                      child: Image.asset(
-                        'assets/images/like_icon.png', // Usa la imagen personalizada
-                        width: 75.0,
-                        height: 75.0,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
           ],
         ),
       ),
@@ -237,5 +283,3 @@ class SettingsPage extends StatelessWidget {
     );
   }
 }
-
-

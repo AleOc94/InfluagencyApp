@@ -56,7 +56,7 @@ class IfluencerMarca extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => SwipeoInfluencers()), // Navega a la nueva pantalla
+                          MaterialPageRoute(builder: (context) => DemoSwipe()), // Navega a la nueva pantalla
                         );
                       },
                       style: ElevatedButton.styleFrom(
@@ -79,7 +79,7 @@ class IfluencerMarca extends StatelessWidget {
                       onPressed: () {
                          Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => DemoSwipe()), // Navega a la nueva pantalla
+                          MaterialPageRoute(builder: (context) => SwipeoInfluencers()), // Navega a la nueva pantalla
                          );
                       },
                       style: ElevatedButton.styleFrom(
