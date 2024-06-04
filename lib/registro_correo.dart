@@ -138,32 +138,27 @@ class _RegistroCorreoScreenState extends State<RegistroCorreoScreen> {
             ),
             const SizedBox(height: 20),
             RichText(
-              text:
+              text: TextSpan(
+                text: '¿Ya tienes cuenta? ',
+                style: const TextStyle(color: Colors.white, fontSize: 16),
+                children: <TextSpan>[
                   TextSpan(
-                    text:'¿Ya tienes cuenta? ',
-                    style:
-                        TextStyle(color:
-                            Color.fromARGB(255,133,25,240), fontSize:
-                            16),
-                    children:<TextSpan> [
-                      TextSpan(
-                        text:'Iniciar sesión',
-                        style:
-                            TextStyle(color:
-                                Color.fromARGB(255,133,25,240), fontWeight:
-                                FontWeight.bold, decoration:
-                                TextDecoration.underline),
-                        recognizer:
-                            TapGestureRecognizer()
-                              ..onTap = () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder:(context) => IniciarSesionScreen()),
-                                );
-                              },
-                      ),
-                    ],
+                    text: 'Iniciar sesión',
+                    style: const TextStyle(
+                      color: Colors.yellow,
+                      fontWeight: FontWeight.bold,
+                      decoration: TextDecoration.underline,
+                    ),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => IniciarSesionScreen()),
+                        );
+                      },
                   ),
+                ],
+              ),
             ),
           ],
         ),
@@ -236,12 +231,11 @@ class _RegistroCorreoScreenState extends State<RegistroCorreoScreen> {
       Text('Error al verificar el correo electrónico')),
     );
 }
-
 void _guardarDatosUsuario(BuildContext context, String email, TipoUsuario tipoUsuario) {
   String nombreColeccion = tipoUsuario == TipoUsuario.marca ? 'marcas' : 'influencers';
   Map<String, dynamic> userData = {
     'email': email,
-     'nombre': email, // Asigna el correo como nombre provisionalmente
+    'nombre': email, // Asigna el correo como nombre provisionalmente
     // Añade más campos según tus necesidades
   };
   BaseDatos().guardarDatosUsuario(email, email, tipoUsuario.toString(), userData);
