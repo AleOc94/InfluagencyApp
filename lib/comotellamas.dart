@@ -185,6 +185,7 @@ class _NameInputScreenState extends State<NameInputScreen> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
+                     backgroundColor: Color.fromARGB(255, 255, 214, 90),
                     padding: const EdgeInsets.symmetric(vertical: 20), // Increase the button height
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),

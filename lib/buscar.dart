@@ -8,12 +8,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomeScreen(),
+      home: BuscarScreen(),
     );
   }
 }
 
-class HomeScreen extends StatelessWidget {
+class BuscarScreen extends StatelessWidget {
   final Color purpleColor = Color(0xFF9333F3);
   final Color yellowColor = Color(0xFFFFC929);
 
