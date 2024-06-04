@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:flip_card/flip_card.dart';
+import 'buscar.dart'; // Importa la pantalla BuscarPage
 
 void main() => runApp(MyApp());
 
@@ -30,6 +31,21 @@ class _DemoSwipeState extends State<DemoSwipe> {
     'Descripción de HG',
     'Descripción de EM',
   ];
+
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    if (index == 1) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => BuscarPage()), // Navega a la pantalla BuscarPage
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +100,7 @@ class _DemoSwipeState extends State<DemoSwipe> {
             ),
             Align(
               alignment: Alignment.bottomLeft,
-             child: Padding(
+              child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Image.asset(
                   'assets/images/dislike_icon.png', // Usa la imagen personalizada
@@ -107,7 +123,7 @@ class _DemoSwipeState extends State<DemoSwipe> {
             ),
             Align(
               alignment: Alignment.bottomRight,
-               child: Padding(
+              child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Image.asset(
                   'assets/images/like_icon.png', // Usa la imagen personalizada
@@ -134,8 +150,10 @@ class _DemoSwipeState extends State<DemoSwipe> {
             label: 'School',
           ),
         ],
+        currentIndex: _selectedIndex,
         selectedItemColor: Colors.white,
         backgroundColor: Color.fromARGB(255, 255, 214, 90),
+        onTap: _onItemTapped,
       ),
     );
   }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'registro_correo.dart'; // Importa la nueva pantalla
 import 'firebase_options.dart';
+import 'buscar.dart'; // Importa la pantalla BuscarPage
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
