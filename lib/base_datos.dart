@@ -3,12 +3,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class BaseDatos {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<void> guardarDatosUsuario(String nombreUsuario, String correoUsuario, String tipoUsuario) async {
+  Future<void> guardarDatosUsuario(String nombreUsuario, String correoUsuario, String tipoUsuario, Map<String, dynamic> datosAdicionales) async {
     try {
       final Map<String, dynamic> userData = {
         'nombre': nombreUsuario,
         'correo': correoUsuario,
-        // Otros campos según sea necesario
+        'biografia': datosAdicionales['biografia'] ?? '',
+        'categorias': datosAdicionales['categorias'] ?? [],
+        'foto_perfil': datosAdicionales['foto_perfil'] ?? '',
+        'linksRedesSociales': datosAdicionales['linksRedesSociales'] ?? {'instagram': '', 'tiktok': '', 'youtube': ''},
+        'seguidores': 0,
       };
 
       final String nombreColeccion = tipoUsuario == 'marca' ? 'marcas' : 'influencers';

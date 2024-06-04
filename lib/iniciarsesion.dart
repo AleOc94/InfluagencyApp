@@ -1,5 +1,6 @@
-// iniciarsesion.dart
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'demo_swip.dart';
 
 class IniciarSesionScreen extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
@@ -63,9 +64,8 @@ class IniciarSesionScreen extends StatelessWidget {
               width: double.infinity, // Ocupa todo el ancho disponible
               child: ElevatedButton(
                 onPressed: () {
-                  // Lógica de inicio de sesión
                   if (_emailController.text.isNotEmpty && _passwordController.text.isNotEmpty) {
-                    // Aquí puedes agregar la lógica para iniciar sesión con Firebase Auth
+                    _iniciarSesion(context, _emailController.text, _passwordController.text);
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Por favor, ingresa el correo y la contraseña')),
@@ -92,5 +92,28 @@ class IniciarSesionScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _iniciarSesion(BuildContext context, String email, String password) {
+    FirebaseAuth.instance
+        .signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    ).then((userCredential) {
+      if (userCredential.user!.emailVerified) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => DemoSwipe()),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Por favor, verifica tu correo electrónico')),
+        );
+      }
+    }).catchError((error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error al iniciar sesión: ${error.toString()}')),
+      );
+    });
   }
 }

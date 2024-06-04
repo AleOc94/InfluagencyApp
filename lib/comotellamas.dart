@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-import 'package:influmeet/InfluencerMarca.dart';
-import 'package:influmeet/registro_correo.dart';
+import 'InfluencerMarca.dart'; // Importa la clase IfluencerMarca
 import 'base_datos.dart'; // Importa la clase BaseDatos donde se define guardarDatosUsuario
-=======
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:influmeet/InfluencerMarca.dart';
->>>>>>> 4de3f1fc273c7048efbc6481e8fe2751e86b863a
 
 class NameInputScreen extends StatefulWidget {
-  const NameInputScreen({Key? key}) : super(key: key);
+  final String correoUsuario;
+
+  const NameInputScreen({Key? key, required this.correoUsuario, required tipoUsuario}) : super(key: key);
 
   @override
   _NameInputScreenState createState() => _NameInputScreenState();
@@ -27,7 +24,7 @@ class _NameInputScreenState extends State<NameInputScreen> {
     {'name': 'Humor', 'icon': FontAwesomeIcons.laugh},
     {'name': 'Belleza', 'icon': FontAwesomeIcons.palette},
     {'name': 'Tecnologías', 'icon': FontAwesomeIcons.laptop},
-    {'name': 'gastronomía', 'icon': FontAwesomeIcons.utensils},
+    {'name': 'Gastronomía', 'icon': FontAwesomeIcons.utensils},
     {'name': 'Música', 'icon': FontAwesomeIcons.music},
   ];
 
@@ -45,73 +42,14 @@ class _NameInputScreenState extends State<NameInputScreen> {
           },
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-<<<<<<< HEAD
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              '¿CÓMO TE LLAMAS?',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 20),
-            TextField(
-              controller: _nameController,
-              decoration: InputDecoration(
-                hintText: 'Introduce tu nombre:',
-                hintStyle: const TextStyle(color: Colors.white70),
-                filled: true,
-                fillColor: Colors.white24,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-              style: const TextStyle(color: Colors.white),
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              'Así es como se mostrará en tu perfil\nPODRÁS CAMBIARLO MÁS TARDE.',
-              style: TextStyle(color: Colors.white),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                if (_nameController.text.isNotEmpty) {
-                  _guardarDatosUsuario(context, _nameController.text);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => IfluencerMarca(correoUsuario: _nameController.text)), // Corrección aquí
-                  );
-                } else {
-                  // Muestra un mensaje de error si el nombre está vacío
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Por favor, ingresa un nombre válido')),
-                  );
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 255, 214, 90), // Fondo amarillo
-                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              child: const Text(
-                'Continuar',
-=======
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
                 '¿CÓMO TE LLAMAS?',
->>>>>>> 4de3f1fc273c7048efbc6481e8fe2751e86b863a
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
@@ -234,9 +172,10 @@ class _NameInputScreenState extends State<NameInputScreen> {
                 child: ElevatedButton(
                   onPressed: () {
                     if (_nameController.text.isNotEmpty) {
+                      _guardarDatosUsuario(context, _nameController.text);
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const IfluencerMarca()),
+                        MaterialPageRoute(builder: (context) => IfluencerMarca(correoUsuario: widget.correoUsuario)),
                       );
                     } else {
                       // Muestra un mensaje de error si el nombre está vacío
@@ -246,18 +185,14 @@ class _NameInputScreenState extends State<NameInputScreen> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 255, 214, 90), // Fondo amarillo
-                    padding: const EdgeInsets.symmetric(vertical: 15), // Adjusted padding to match input fields height
+                    padding: const EdgeInsets.symmetric(vertical: 20), // Increase the button height
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(20),
                     ),
                   ),
                   child: const Text(
-                    'Continuar',
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 133, 25, 240), // Texto morado
-                      fontSize: 16,
-                    ),
+                    'Siguiente',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
@@ -267,13 +202,21 @@ class _NameInputScreenState extends State<NameInputScreen> {
       ),
     );
   }
-<<<<<<< HEAD
 
-  void _guardarDatosUsuario(BuildContext context, String nombreUsuario) {
-    BaseDatos().guardarDatosUsuario(nombreUsuario, _nameController.text, ''); // Cambio en el llamado de la función
+  Future<void> _guardarDatosUsuario(BuildContext context, String nombreUsuario) async {
+    final Map<String, dynamic> datosAdicionales = {
+      'biografia': _descriptionController.text,
+      'categorias': [_selectedCategory],
+      'foto_perfil': '',
+      'linksRedesSociales': {'instagram': _linkController.text, 'tiktok': '', 'youtube': ''},
+    };
+
+    final BaseDatos baseDatos = BaseDatos();
+    await baseDatos.guardarDatosUsuario(
+      nombreUsuario,
+      widget.correoUsuario,
+      'influencer',
+      datosAdicionales,
+    );
   }
 }
-
-=======
-}
->>>>>>> 4de3f1fc273c7048efbc6481e8fe2751e86b863a
