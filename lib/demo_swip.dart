@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tcard/tcard.dart';
 import 'package:flip_card/flip_card.dart';
+import 'brand_profile.dart'; // Importa la pantalla de perfil
 
 void main() => runApp(MyApp());
 
@@ -60,10 +61,10 @@ class _DemoSwipeState extends State<DemoSwipe> {
             Positioned(
               top: 10,
               right: 10,
-              child: Icon(
-                Icons.info,
-                color: Colors.white,
-                size: 30,
+              child: SizedBox(
+                width: 50,
+                height: 50,
+                child: Image.asset('assets/images/information_icon.png'),
               ),
             ),
           ],
@@ -89,12 +90,12 @@ class _DemoSwipeState extends State<DemoSwipe> {
             Positioned(
               top: 10,
               right: 10,
-              child:  SizedBox(
-                                width: 30,
-                                height: 30,
-                                child: Image.asset('assets/images/information_icon.png'),
-                              ),
+              child: SizedBox(
+                width: 50,
+                height: 50,
+                child: Image.asset('assets/images/information_icon.png'),
               ),
+            ),
           ],
         ),
       ),
@@ -156,7 +157,7 @@ class _DemoSwipeState extends State<DemoSwipe> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SettingsPage()),
+                MaterialPageRoute(builder: (context) => SettingsPage()), // Navega a la pantalla de configuración
               );
             },
           ),
@@ -276,9 +277,38 @@ class SettingsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Settings'),
+        backgroundColor: Color.fromARGB(255, 255, 214, 90),
       ),
-      body: Center(
-        child: Text('Settings Page'),
+      body: Container(
+        color: Color.fromARGB(255, 133, 25, 240), // Fondo morado
+        child: ListView(
+          children: [
+            ListTile(
+              leading: Icon(Icons.person, color: Colors.white),
+              title: Text('Perfil', style: TextStyle(color: Colors.white)),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => BrandProfile()), // Navega a la pantalla de perfil
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.account_circle, color: Colors.white),
+              title: Text('Cuenta', style: TextStyle(color: Colors.white)),
+              onTap: () {
+                // Acción para "Cuenta"
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.logout, color: Colors.white),
+              title: Text('Cerrar sesión', style: TextStyle(color: Colors.white)),
+              onTap: () {
+                // Acción para "Cerrar sesión"
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

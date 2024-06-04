@@ -24,6 +24,7 @@ dependencies:
   font_awesome_flutter: ^10.1.0 # Asegúrate de utilizar la última versión
   tcard: ^1.3.1  # Añadida dependencia para la funcionalidad de swipe de tarjetas
   fluttertoast: ^8.0.9  # Añadida dependencia para mostrar mensajes temporales
+  image_picker: ^0.8.4+8
 
 dev_dependencies:
   flutter_test:
@@ -45,4 +46,5 @@ flutter:
     - assets/images/like_icon.png
     - assets/images/dislike_icon.png
     - assets/images/information_icon.png
+  
 
