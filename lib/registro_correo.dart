@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:influmeet/comotellamas.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'base_datos.dart';
 import 'bienvenida.dart';
 import 'iniciarsesion.dart';
@@ -113,7 +113,7 @@ class _RegistroCorreoScreenState extends State<RegistroCorreoScreen> {
               child: ElevatedButton(
                 onPressed: () {
                   if (_emailController.text.isNotEmpty) {
-                    _crearUsuarioConCorreo(context, _emailController.text, _tipoUsuarioSeleccionado);
+                    _crearUsuarioConCorreo(context, _emailController.text, _passwordController.text, _tipoUsuarioSeleccionado);
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Por favor, ingresa un correo válido')),
@@ -121,49 +121,32 @@ class _RegistroCorreoScreenState extends State<RegistroCorreoScreen> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor:
-                      const Color.fromARGB(255, 255, 214, 90),
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 15),
-                  shape:
-                      RoundedRectangleBorder(borderRadius:
-                          BorderRadius.circular(8)),
+                  backgroundColor: const Color.fromARGB(255, 255, 214, 90),
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                 ),
-                child:
-                    const Text('Continuar', style:
-                        TextStyle(color:
-                            Color.fromARGB(255, 133, 25, 240), fontSize:
-                            16)),
+                child: const Text('Continuar', style: TextStyle(color: Color.fromARGB(255, 133, 25, 240), fontSize: 16)),
               ),
             ),
             const SizedBox(height: 20),
             RichText(
-              text:
+              text: TextSpan(
+                text: '¿Ya tienes cuenta? ',
+                style: TextStyle(color: Color.fromARGB(255, 133, 25, 240), fontSize: 16),
+                children: <TextSpan>[
                   TextSpan(
-                    text:'¿Ya tienes cuenta? ',
-                    style:
-                        TextStyle(color:
-                            Color.fromARGB(255,133,25,240), fontSize:
-                            16),
-                    children:<TextSpan> [
-                      TextSpan(
-                        text:'Iniciar sesión',
-                        style:
-                            TextStyle(color:
-                                Color.fromARGB(255,133,25,240), fontWeight:
-                                FontWeight.bold, decoration:
-                                TextDecoration.underline),
-                        recognizer:
-                            TapGestureRecognizer()
-                              ..onTap = () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder:(context) => IniciarSesionScreen()),
-                                );
-                              },
-                      ),
-                    ],
+                    text: 'Iniciar sesión',
+                    style: TextStyle(color: Color.fromARGB(255, 133, 25, 240), fontWeight: FontWeight.bold, decoration: TextDecoration.underline),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => IniciarSesionScreen()),
+                        );
+                      },
                   ),
+                ],
+              ),
             ),
           ],
         ),
@@ -171,9 +154,9 @@ class _RegistroCorreoScreenState extends State<RegistroCorreoScreen> {
     );
   }
 
-  void _crearUsuarioConCorreo(BuildContext context, String email, TipoUsuario tipoUsuario) {
+  void _crearUsuarioConCorreo(BuildContext context, String email, String password, TipoUsuario tipoUsuario) {
     FirebaseAuth.instance
-        .createUserWithEmailAndPassword(email:_emailController.text, password:_passwordController.text)
+        .createUserWithEmailAndPassword(email: email, password: password)
         .then((userCredential) {
       // Envía un correo electrónico de verificación
       userCredential.user?.sendEmailVerification().then((_) {
@@ -181,69 +164,59 @@ class _RegistroCorreoScreenState extends State<RegistroCorreoScreen> {
           _emailVerified = false;
         });
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content:
-          Text('Se ha enviado un correo de verificación')),
+          const SnackBar(content: Text('Se ha enviado un correo de verificación')),
         );
+        // Guarda los datos del usuario en la colección correspondiente de Firestore
+        _guardarDatosUsuario(userCredential.user?.uid, email, password, tipoUsuario);
       }).catchError((error) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content:
-          Text('Error al enviar el correo de verificación:${error.toString()}')),
+          SnackBar(content: Text('Error al enviar el correo de verificación: ${error.toString()}')),
         );
       });
     }).catchError((error) {
-      if(error is FirebaseAuthException && error.code == 'email-already-in-use') {
-        FirebaseAuth.instance.signInWithEmailAndPassword(email:_emailController.text, password:_passwordController.text)
-        .then((userCredential) {
-          if(userCredential.user!.emailVerified) {
+      if (error is FirebaseAuthException && error.code == 'email-already-in-use') {
+        FirebaseAuth.instance
+            .signInWithEmailAndPassword(email: email, password: password)
+            .then((userCredential) {
+          if (userCredential.user!.emailVerified) {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder:(context) =>const BienvenidaScreen()),
+              MaterialPageRoute(builder: (context) => const BienvenidaScreen()),
             );
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content:
-              Text('Por favor, verifica tu correo electrónico')),
+              const SnackBar(content: Text('Por favor, verifica tu correo electrónico')),
             );
           }
         }).catchError((error) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content:
-            Text('Error al iniciar sesión:${error.toString()}')),
+            SnackBar(content: Text('Error al iniciar sesión: ${error.toString()}')),
           );
         });
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content:
-          Text('Error al registrar usuario:${error.toString()}')),
+          SnackBar(content: Text('Error al registrar usuario: ${error.toString()}')),
         );
       }
     });
   }
 
-  void _onVerificationCompleted() {
-    setState(() {
-      _emailVerified = true;
-    });
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content:
-      Text('Correo electrónico verificado')),
-    );
+  void _guardarDatosUsuario(String? uid, String email, String password, TipoUsuario tipoUsuario) {
+    if (uid != null) {
+      String collectionName = tipoUsuario == TipoUsuario.marca ? 'marcas' : 'influencers';
+      FirebaseFirestore.instance.collection(collectionName).doc(uid).set({
+        'email': email,
+        'password': password, // Considera no guardar contraseñas en texto plano
+        'tipoUsuario': tipoUsuario.toString().split('.').last,
+      }).then((_) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Datos del usuario guardados correctamente')),
+        );
+      }).catchError((error) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error al guardar los datos del usuario: ${error.toString()}')),
+        );
+      });
+    }
   }
-
-  void _onVerificationFailed() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content:
-      Text('Error al verificar el correo electrónico')),
-    );
-}
-
-void _guardarDatosUsuario(BuildContext context, String email, TipoUsuario tipoUsuario) {
-  String nombreColeccion = tipoUsuario == TipoUsuario.marca ? 'marcas' : 'influencers';
-  Map<String, dynamic> userData = {
-    'email': email,
-     'nombre': email, // Asigna el correo como nombre provisionalmente
-    // Añade más campos según tus necesidades
-  };
-  BaseDatos().guardarDatosUsuario(email, email, tipoUsuario.toString(), userData);
-}
 }
