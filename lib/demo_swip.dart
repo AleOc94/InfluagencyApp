@@ -4,6 +4,7 @@ import 'package:tcard/tcard.dart';
 import 'package:flip_card/flip_card.dart';
 import 'brand_profile.dart'; // Importa la pantalla de perfil
 import 'main.dart'; 
+import 'buscar.dart'; // Importa la pantalla de buscar
 
 void main() => runApp(MyApp());
 
@@ -62,6 +63,7 @@ class _DemoSwipeState extends State<DemoSwipe> {
   bool noMoreCards = false;
   bool canGoBack = false; // Para controlar si se puede volver a la tarjeta anterior
   int currentIndex = 0; // Índice de la tarjeta actual
+  int _selectedIndex = 0; // Para el índice seleccionado del BottomNavigationBar
 
   @override
   void initState() {
@@ -164,6 +166,29 @@ class _DemoSwipeState extends State<DemoSwipe> {
         canGoBack = false; // No permitir volver a la tarjeta actual nuevamente
       });
       _controller.back();
+    }
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+    switch (index) {
+      case 0:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreen()),
+        );
+        break;
+      case 1:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => BuscarScreen()), // Navega a la pantalla de buscar
+        );
+        break;
+      case 2:
+        // Acciones para el tercer ítem
+        break;
     }
   }
 
@@ -288,8 +313,10 @@ class _DemoSwipeState extends State<DemoSwipe> {
             label: 'School',
           ),
         ],
+        currentIndex: _selectedIndex,
         selectedItemColor: Colors.white,
         backgroundColor: Color.fromARGB(255, 255, 214, 90),
+        onTap: _onItemTapped,
       ),
     );
   }
@@ -346,4 +373,3 @@ class SettingsPage extends StatelessWidget {
     );
   }
 }
-
