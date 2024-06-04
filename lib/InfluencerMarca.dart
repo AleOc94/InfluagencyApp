@@ -2,10 +2,26 @@ import 'package:flutter/material.dart';
 import 'demo_swip.dart';
 import 'swipeoInfluencers.dart';
 import 'base_datos.dart'; // Importa la clase BaseDatos donde se define guardarDatosUsuario
+import 'package:influmeet/demo_swip.dart';
+import 'package:influmeet/swipeoInfluencers.dart';
 
 enum TipoUsuario {
   influencer,
   marca,
+}
+// Define la clase ManualDeUsoScreen como un StatelessWidget
+class ManualDeUsoScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Manual de Uso'),
+      ),
+      body: Center(
+        child: Text('Contenido del Manual de Uso'),
+      ),
+    );
+  }
 }
 
 class IfluencerMarca extends StatelessWidget {
@@ -54,6 +70,7 @@ class IfluencerMarca extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => DemoSwipe()),
+                          MaterialPageRoute(builder: (context) => SwipeoInfluencers()), // Navega a la nueva pantalla
                         );
                       },
                       style: ElevatedButton.styleFrom(
@@ -80,6 +97,8 @@ class IfluencerMarca extends StatelessWidget {
                           context,
                           MaterialPageRoute(builder: (context) => SwipeoInfluencers()),
                         );
+                          MaterialPageRoute(builder: (context) => DemoSwipe()), // Navega a la nueva pantalla
+                         );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color.fromARGB(255, 255, 214, 90), // Fondo amarillo
@@ -121,4 +140,5 @@ class IfluencerMarca extends StatelessWidget {
     // Llama al método para guardar los datos en Firestore
     BaseDatos().guardarDatosUsuario(correoUsuario, correoUsuario, nombreColeccion);
   }
+}
 }
