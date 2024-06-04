@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tcard/tcard.dart';
 import 'package:flip_card/flip_card.dart';
 import 'brand_profile.dart'; // Importa la pantalla de perfil
+import 'main.dart'; 
 
 void main() => runApp(MyApp());
 
@@ -10,7 +11,30 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: DemoSwipe(),
+      home: HomeScreen(),
+    );
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Home Screen'),
+        backgroundColor: Color.fromARGB(255, 255, 214, 90),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => DemoSwipe()),
+            );
+          },
+          child: Text('Go to DemoSwipe'),
+        ),
+      ),
     );
   }
 }
@@ -272,6 +296,15 @@ class _DemoSwipeState extends State<DemoSwipe> {
 }
 
 class SettingsPage extends StatelessWidget {
+  void _logout(BuildContext context) {
+    // Aquí puedes agregar la lógica de cierre de sesión
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => MainScreen()),
+      (Route<dynamic> route) => false,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -304,7 +337,7 @@ class SettingsPage extends StatelessWidget {
               leading: Icon(Icons.logout, color: Colors.white),
               title: Text('Cerrar sesión', style: TextStyle(color: Colors.white)),
               onTap: () {
-                // Acción para "Cerrar sesión"
+                _logout(context); // Llama a la función de cierre de sesión
               },
             ),
           ],
@@ -313,3 +346,4 @@ class SettingsPage extends StatelessWidget {
     );
   }
 }
+
