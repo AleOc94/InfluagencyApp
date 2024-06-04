@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
-import 'InfluencerMarca.dart'; // Importa la clase IfluencerMarca
-import 'base_datos.dart'; // Importa la clase BaseDatos donde se define guardarDatosUsuario
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'base_datos.dart'; // Asegúrate de que este import esté presente
+import 'bienvenida.dart';
 
 class NameInputScreen extends StatefulWidget {
   final String correoUsuario;
+  final String tipoUsuario;
 
-  const NameInputScreen({Key? key, required this.correoUsuario, required tipoUsuario}) : super(key: key);
+  const NameInputScreen({
+    Key? key,
+    required this.correoUsuario,
+    required this.tipoUsuario,
+  }) : super(key: key);
 
   @override
   _NameInputScreenState createState() => _NameInputScreenState();
@@ -173,10 +178,6 @@ class _NameInputScreenState extends State<NameInputScreen> {
                   onPressed: () {
                     if (_nameController.text.isNotEmpty) {
                       _guardarDatosUsuario(context, _nameController.text);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => IfluencerMarca(correoUsuario: widget.correoUsuario)),
-                      );
                     } else {
                       // Muestra un mensaje de error si el nombre está vacío
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -185,7 +186,7 @@ class _NameInputScreenState extends State<NameInputScreen> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                     backgroundColor: Color.fromARGB(255, 255, 214, 90),
+                    backgroundColor: Color.fromARGB(255, 255, 214, 90),
                     padding: const EdgeInsets.symmetric(vertical: 20), // Increase the button height
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
@@ -216,8 +217,16 @@ class _NameInputScreenState extends State<NameInputScreen> {
     await baseDatos.guardarDatosUsuario(
       nombreUsuario,
       widget.correoUsuario,
-      'influencer',
+      widget.tipoUsuario,
       datosAdicionales,
+    );
+
+    // Navegar a la siguiente pantalla o realizar alguna otra acción
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const BienvenidaScreen(),
+      ),
     );
   }
 }

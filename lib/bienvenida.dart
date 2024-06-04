@@ -63,11 +63,16 @@ class BienvenidaScreen extends StatelessWidget {
             ),
             Center(
               child: ElevatedButton(
-                onPressed: () {Navigator.push(
+                onPressed: () {
+                  Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const NameInputScreen(correoUsuario: '', tipoUsuario: null,)), // Navega a la nueva pantalla
+                    MaterialPageRoute(
+                      builder: (context) => NameInputScreen(
+                        correoUsuario: 'correoEjemplo@example.com', // Proporciona un valor válido
+                        tipoUsuario: 'influencer', // Proporciona un valor válido
+                      ),
+                    ),
                   );
-                  // Acción cuando se presiona el botón "Acepto"
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 255, 214, 90), // Fondo amarillo
