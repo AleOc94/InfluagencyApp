@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'base_datos.dart';
 import 'bienvenida.dart';
 import 'iniciarsesion.dart';
+import 'comotellamas.dart'; // Asegúrate de que este import esté presente
 import 'package:flutter/gestures.dart';
 
 // Define el enum TipoUsuario
@@ -176,8 +177,6 @@ class _RegistroCorreoScreenState extends State<RegistroCorreoScreen> {
             ),
           ),
         );
-        // Guarda los datos del usuario en la colección correspondiente de Firestore
-        _guardarDatosUsuario(userCredential.user?.uid, email, password, tipoUsuario);
       }).catchError((error) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Error al enviar el correo de verificación: ${error.toString()}')),
