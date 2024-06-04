@@ -21,6 +21,7 @@ dependencies:
   awesome_notifications: ^0.9.3
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  cloud_firestore: ^4.17.5
   font_awesome_flutter: ^10.1.0 # Asegúrate de utilizar la última versión
   tcard: ^1.3.1  # Añadida dependencia para la funcionalidad de swipe de tarjetas
   fluttertoast: ^8.0.9  # Añadida dependencia para mostrar mensajes temporales

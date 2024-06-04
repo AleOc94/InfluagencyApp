@@ -65,7 +65,7 @@ class BienvenidaScreen extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () {Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const NameInputScreen()), // Navega a la nueva pantalla
+                    MaterialPageRoute(builder: (context) => const NameInputScreen(correoUsuario: '', tipoUsuario: null,)), // Navega a la nueva pantalla
                   );
                   // Acción cuando se presiona el botón "Acepto"
                 },
