@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:io';
 
 class BrandProfile extends StatefulWidget {
@@ -13,6 +15,7 @@ class _BrandProfileState extends State<BrandProfile> {
   String _selectedCategory = 'Deporte';
   File? _profileImage;
   List<File> _galleryImages = [];
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   final List<Map<String, dynamic>> _categories = [
     {'name': 'Deporte', 'icon': FontAwesomeIcons.futbol},
@@ -20,7 +23,7 @@ class _BrandProfileState extends State<BrandProfile> {
     {'name': 'Humor', 'icon': FontAwesomeIcons.laugh},
     {'name': 'Belleza', 'icon': FontAwesomeIcons.palette},
     {'name': 'Tecnologías', 'icon': FontAwesomeIcons.laptop},
-    {'name': 'gastronomía', 'icon': FontAwesomeIcons.utensils},
+    {'name': 'Gastronomía', 'icon': FontAwesomeIcons.utensils},
     {'name': 'Música', 'icon': FontAwesomeIcons.music},
   ];
 
@@ -30,10 +33,37 @@ class _BrandProfileState extends State<BrandProfile> {
       setState(() {
         if (isProfile) {
           _profileImage = File(pickedFile.path);
+          _uploadImage(_profileImage!, isProfile: true);
         } else {
-          _galleryImages.add(File(pickedFile.path));
+          final File image = File(pickedFile.path);
+          _galleryImages.add(image);
+          _uploadImage(image);
         }
       });
+    }
+  }
+
+  Future<void> _uploadImage(File image, {bool isProfile = false}) async {
+    try {
+      final ref = FirebaseStorage.instance
+          .ref()
+          .child('user_images')
+          .child(_nameController.text)
+          .child(DateTime.now().toIso8601String() + '.jpg');
+      await ref.putFile(image);
+      final url = await ref.getDownloadURL();
+
+      final userDoc = _firestore.collection('users').doc(_nameController.text);
+
+      if (isProfile) {
+        await userDoc.set({'profileImage': url}, SetOptions(merge: true));
+      } else {
+        await userDoc.set({
+          'galleryImages': FieldValue.arrayUnion([url])
+        }, SetOptions(merge: true));
+      }
+    } catch (e) {
+      print(e);
     }
   }
 

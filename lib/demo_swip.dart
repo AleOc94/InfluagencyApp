@@ -22,7 +22,7 @@ class DemoSwip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Screen'),
+        title: Text('Inicio'),
         backgroundColor: Color.fromARGB(255, 255, 214, 90),
       ),
       body: Center(
