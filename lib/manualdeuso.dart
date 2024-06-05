@@ -3,6 +3,7 @@ import 'bienvenida.dart';
 import 'demo_swip.dart'; // Importa la pantalla DemoSwipe
 import 'swipeoInfluencers.dart'; // Importa la pantalla SwipeoInfluencers
 
+
 class ManualDeUsoScreen extends StatelessWidget {
   final String tipoUsuario;
 
@@ -86,7 +87,7 @@ class ManualDeUsoScreen extends StatelessWidget {
                   if (tipoUsuario == 'marca') {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => DemoSwipe()),
+                      MaterialPageRoute(builder: (context) => DemoSwip()),
                     );
                   } else if (tipoUsuario == 'influencer') {
                     Navigator.pushReplacement(

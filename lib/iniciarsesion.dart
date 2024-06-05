@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'demo_swip.dart';
-import 'swipeoInfluencers.dart';
+import 'package:influmeet/demo_swip.dart' as demoSwipe;
+import 'package:influmeet/demo_swip.dart';
+import 'package:influmeet/swipeoInfluencers.dart' as swipeoInfluencers;
+import 'package:influmeet/swipeoInfluencers.dart';
 
 class IniciarSesionScreen extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
@@ -118,7 +120,7 @@ class IniciarSesionScreen extends StatelessWidget {
             if (tipoUsuario == 'marca') {
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => DemoSwipe()),
+                MaterialPageRoute(builder: (context) => DemoSwip()),
               );
             } else if (tipoUsuario == 'influencer') {
               Navigator.pushReplacement(

@@ -7,7 +7,6 @@ import 'iniciarsesion.dart';
 import 'package:flutter/gestures.dart';
 import 'dart:async';
 
-// Define el enum TipoUsuario
 enum TipoUsuario {
   marca,
   influencer,
@@ -179,8 +178,7 @@ class _RegistroCorreoScreenState extends State<RegistroCorreoScreen> {
         await user.sendEmailVerification();
 
         // Guardar datos en Firestore
-        String collectionName = tipoUsuario == TipoUsuario.marca ? 'marcas' : 'influencers';
-        await FirebaseFirestore.instance.collection(collectionName).doc(user.uid).set({
+        await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
           'email': email,
           'tipoUsuario': tipoUsuario.toString().split('.').last,
         });

@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:io';
 
 class BrandProfile extends StatefulWidget {
@@ -45,15 +46,20 @@ class _BrandProfileState extends State<BrandProfile> {
 
   Future<void> _uploadImage(File image, {bool isProfile = false}) async {
     try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user == null) {
+        throw Exception("No user is signed in.");
+      }
+      String userId = user.uid;
       final ref = FirebaseStorage.instance
           .ref()
           .child('user_images')
-          .child(_nameController.text)
+          .child(userId)
           .child(DateTime.now().toIso8601String() + '.jpg');
       await ref.putFile(image);
       final url = await ref.getDownloadURL();
 
-      final userDoc = _firestore.collection('users').doc(_nameController.text);
+      final userDoc = _firestore.collection('users').doc(userId);
 
       if (isProfile) {
         await userDoc.set({'profileImage': url}, SetOptions(merge: true));
