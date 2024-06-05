@@ -12,12 +12,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomeScreen(),
+      home: DemoSwip(),
     );
   }
 }
 
-class HomeScreen extends StatelessWidget {
+class DemoSwip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -177,7 +177,7 @@ class _DemoSwipeState extends State<DemoSwipe> {
       case 0:
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => HomeScreen()),
+          MaterialPageRoute(builder: (context) => DemoSwip()),
         );
         break;
       case 1:

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'base_datos.dart'; // Asegúrate de que este import esté presente
-import 'bienvenida.dart';
+import 'bienvenida.dart'; // Importa la nueva pantalla
 
 class NameInputScreen extends StatefulWidget {
   final String correoUsuario;
@@ -221,11 +221,13 @@ class _NameInputScreenState extends State<NameInputScreen> {
       datosAdicionales,
     );
 
-    // Navegar a la siguiente pantalla o realizar alguna otra acción
+    // Navegar a la pantalla Bienvenida
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const BienvenidaScreen(),
+        builder: (context) => BienvenidaScreen(
+          tipoUsuario: widget.tipoUsuario,
+        ),
       ),
     );
   }

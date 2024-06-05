@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'base_datos.dart';
-import 'bienvenida.dart';
+import 'comotellamas.dart';
 import 'iniciarsesion.dart';
-import 'comotellamas.dart'; // Asegúrate de que este import esté presente
 import 'package:flutter/gestures.dart';
+import 'dart:async';
 
 // Define el enum TipoUsuario
 enum TipoUsuario {
@@ -24,6 +24,14 @@ class _RegistroCorreoScreenState extends State<RegistroCorreoScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   TipoUsuario _tipoUsuarioSeleccionado = TipoUsuario.influencer;
+  bool _isVerifying = false;
+  late Timer _timer;
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +119,7 @@ class _RegistroCorreoScreenState extends State<RegistroCorreoScreen> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: _isVerifying ? null : () {
                   if (_emailController.text.isNotEmpty && _passwordController.text.isNotEmpty) {
                     _crearUsuarioConCorreo(context, _emailController.text, _passwordController.text, _tipoUsuarioSeleccionado);
                   } else {
@@ -158,34 +166,75 @@ class _RegistroCorreoScreenState extends State<RegistroCorreoScreen> {
     );
   }
 
-  void _crearUsuarioConCorreo(BuildContext context, String email, String password, TipoUsuario tipoUsuario) {
-    FirebaseAuth.instance
-        .createUserWithEmailAndPassword(email: email, password: password)
-        .then((userCredential) {
-      // Envía un correo electrónico de verificación
-      userCredential.user?.sendEmailVerification().then((_) {
+  void _crearUsuarioConCorreo(BuildContext context, String email, String password, TipoUsuario tipoUsuario) async {
+    setState(() {
+      _isVerifying = true;
+    });
+
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+      User? user = userCredential.user;
+
+      if (user != null) {
+        await user.sendEmailVerification();
+
+        // Guardar datos en Firestore
+        String collectionName = tipoUsuario == TipoUsuario.marca ? 'marcas' : 'influencers';
+        await FirebaseFirestore.instance.collection(collectionName).doc(user.uid).set({
+          'email': email,
+          'tipoUsuario': tipoUsuario.toString().split('.').last,
+        });
+
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Se ha enviado un correo de verificación')),
         );
-        // Navega a NameInputScreen pasando el correo y el tipo de usuario
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => NameInputScreen(
-              correoUsuario: email,
-              tipoUsuario: tipoUsuario.toString().split('.').last,
+
+        _timer = Timer.periodic(Duration(seconds: 3), (timer) async {
+          await user?.reload();
+          user = FirebaseAuth.instance.currentUser;
+          if (user != null && user!.emailVerified) {
+            timer.cancel();
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => NameInputScreen(
+                  correoUsuario: email,
+                  tipoUsuario: tipoUsuario.toString().split('.').last,
+                ),
+              ),
+            );
+          }
+        });
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'email-already-in-use') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('El correo electrónico ya está en uso. Inicia sesión.'),
+            action: SnackBarAction(
+              label: 'Iniciar sesión',
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => IniciarSesionScreen()),
+                );
+              },
             ),
           ),
         );
-      }).catchError((error) {
+      } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error al enviar el correo de verificación: ${error.toString()}')),
+          SnackBar(content: Text('Error al registrar usuario: ${e.message}')),
         );
-      });
-    }).catchError((error) {
+      }
+    } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error al registrar usuario: ${error.toString()}')),
+        SnackBar(content: Text('Error al registrar usuario: $e')),
       );
-    });
+    } finally {
+      setState(() {
+        _isVerifying = false;
+      });
+    }
   }
 }

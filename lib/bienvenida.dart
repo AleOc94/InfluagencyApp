@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
-import 'comotellamas.dart'; // Importa la biblioteca de gestos
+import 'demo_swip.dart'; // Importa las pantallas correspondientes
+import 'swipeoInfluencers.dart';
 
 class BienvenidaScreen extends StatelessWidget {
-  const BienvenidaScreen({super.key});
+  final String tipoUsuario;
+
+  const BienvenidaScreen({super.key, required this.tipoUsuario});
 
   @override
   Widget build(BuildContext context) {
@@ -64,15 +67,17 @@ class BienvenidaScreen extends StatelessWidget {
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => NameInputScreen(
-                        correoUsuario: 'correoEjemplo@example.com', // Proporciona un valor válido
-                        tipoUsuario: 'influencer', // Proporciona un valor válido
-                      ),
-                    ),
-                  );
+                  if (tipoUsuario == 'marca') {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => DemoSwip()),
+                    );
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SwipeoInfluencers()),
+                    );
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 255, 214, 90), // Fondo amarillo
