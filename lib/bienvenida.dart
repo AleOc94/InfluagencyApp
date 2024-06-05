@@ -68,12 +68,12 @@ class BienvenidaScreen extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () {
                   if (tipoUsuario == 'marca') {
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => DemoSwip()),
+                      MaterialPageRoute(builder: (context) => DemoSwipe()),
                     );
-                  } else {
-                    Navigator.push(
+                  } else if (tipoUsuario == 'influencer') {
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => SwipeoInfluencers()),
                     );

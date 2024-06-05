@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'demo_swip.dart';
+import 'swipeoInfluencers.dart';
 
 class IniciarSesionScreen extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
@@ -60,8 +62,8 @@ class IniciarSesionScreen extends StatelessWidget {
               obscureText: true,
             ),
             const SizedBox(height: 20),
-            SizedBox( // Envuelve el botón en un SizedBox
-              width: double.infinity, // Ocupa todo el ancho disponible
+            SizedBox(
+              width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
                   if (_emailController.text.isNotEmpty && _passwordController.text.isNotEmpty) {
@@ -94,26 +96,51 @@ class IniciarSesionScreen extends StatelessWidget {
     );
   }
 
-  void _iniciarSesion(BuildContext context, String email, String password) {
-    FirebaseAuth.instance
-        .signInWithEmailAndPassword(
-      email: email,
-      password: password,
-    ).then((userCredential) {
-      if (userCredential.user!.emailVerified) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => DemoSwipe()),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Por favor, verifica tu correo electrónico')),
-        );
+  void _iniciarSesion(BuildContext context, String email, String password) async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      User? user = userCredential.user;
+      if (user != null) {
+        if (user.emailVerified) {
+          // Intentar obtener el tipo de usuario de ambas colecciones
+          DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance.collection('marcas').doc(user.uid).get();
+          
+          if (!snapshot.exists) {
+            snapshot = await FirebaseFirestore.instance.collection('influencers').doc(user.uid).get();
+          }
+
+          if (snapshot.exists) {
+            String tipoUsuario = snapshot.data()!['tipoUsuario'];
+            if (tipoUsuario == 'marca') {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => DemoSwipe()),
+              );
+            } else if (tipoUsuario == 'influencer') {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => SwipeoInfluencers()),
+              );
+            }
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Error: No se encontró el tipo de usuario')),
+            );
+          }
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Por favor, verifica tu correo electrónico')),
+          );
+        }
       }
-    }).catchError((error) {
+    } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error al iniciar sesión: ${error.toString()}')),
       );
-    });
+    }
   }
 }
