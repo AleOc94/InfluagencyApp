@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:influmeet/manualdeuso.dart';
 import 'demo_swip.dart'; // Importa las pantallas correspondientes
 import 'swipeoInfluencers.dart';
 
@@ -70,12 +71,12 @@ class BienvenidaScreen extends StatelessWidget {
                   if (tipoUsuario == 'marca') {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => DemoSwipe()),
+                      MaterialPageRoute(builder: (context) => ManualDeUsoScreen(tipoUsuario: 'marca',)),
                     );
                   } else if (tipoUsuario == 'influencer') {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => SwipeoInfluencers()),
+                      MaterialPageRoute(builder: (context) => ManualDeUsoScreen(tipoUsuario: 'influencer',)),
                     );
                   }
                 },

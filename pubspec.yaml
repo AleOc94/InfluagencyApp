@@ -49,5 +49,13 @@ flutter:
     - assets/images/like_icon.png
     - assets/images/dislike_icon.png
     - assets/images/information_icon.png
+    - assets/images/musica.jpg
+    - assets/images/deportes.jpg
+    - assets/images/humor.jpg
+    - assets/images/entretenimiento.jpg
+    - assets/images/tecnologia.jpg
+    - assets/images/gastronomia.jpg
+    - assets/images/belleza.jpg
+    - assets/images/logo.png
   
 

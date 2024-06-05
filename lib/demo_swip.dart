@@ -22,20 +22,50 @@ class DemoSwip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Inicio'),
+        title: Text('Home'),
         backgroundColor: Color.fromARGB(255, 255, 214, 90),
       ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => DemoSwipe()),
-            );
-          },
-          child: Text('Go to DemoSwipe'),
+      drawer: Drawer( // Agrega un drawer (menú lateral)
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 255, 214, 90),
+              ),
+              child: Text(
+                'Menú',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            ListTile(
+              title: Text('Home'),
+              onTap: () {
+                Navigator.pop(context); // Cierra el drawer
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DemoSwip()),
+                );
+              },
+            ),
+            ListTile(
+              title: Text('Buscar'),
+              onTap: () {
+                Navigator.pop(context); // Cierra el drawer
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => BuscarScreen()),
+                );
+              },
+            ),
+            // Puedes agregar más elementos de menú aquí
+          ],
         ),
       ),
+      bottomNavigationBar: CustomBottomNavigationBar(selectedIndex: 0),
     );
   }
 }
@@ -169,29 +199,6 @@ class _DemoSwipeState extends State<DemoSwipe> {
     }
   }
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-    switch (index) {
-      case 0:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => DemoSwip()),
-        );
-        break;
-      case 1:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => BuscarScreen()), // Navega a la pantalla de buscar
-        );
-        break;
-      case 2:
-        // Acciones para el tercer ítem
-        break;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final double spacing = 20.0; // Espacio uniforme entre los elementos
@@ -240,7 +247,7 @@ class _DemoSwipeState extends State<DemoSwipe> {
                             if (info.direction == SwipDirection.Right) {
                               handleSwipe(true);
                             } else if (info.direction == SwipDirection.Left) {
-                              handleSwipe(false);
+                            handleSwipe(false);
                             }
                           },
                           onEnd: () {
@@ -298,26 +305,7 @@ class _DemoSwipeState extends State<DemoSwipe> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Business',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'School',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.white,
-        backgroundColor: Color.fromARGB(255, 255, 214, 90),
-        onTap: _onItemTapped,
-      ),
+      bottomNavigationBar: CustomBottomNavigationBar(selectedIndex: 0),
     );
   }
 }
@@ -370,6 +358,57 @@ class SettingsPage extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class CustomBottomNavigationBar extends StatelessWidget {
+  final int selectedIndex;
+
+  CustomBottomNavigationBar({required this.selectedIndex});
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+      items: <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Home',
+        ),
+        BottomNavigationBarItem(
+          icon: ImageIcon(
+            AssetImage('assets/images/logo.png'),
+          ),
+          label: 'Guardado',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.search),
+          label: 'Buscar',
+        ),
+      ],
+      currentIndex: selectedIndex,
+      selectedItemColor: Colors.white,
+      backgroundColor: Color.fromARGB(255, 255, 214, 90),
+      onTap: (index) {
+        switch (index) {
+          case 0:
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => DemoSwipe()),
+            );
+            break;
+          case 1:
+            // Acción al pulsar "Guardado"
+            // Aquí puedes añadir la navegación a la pantalla correspondiente
+            break;
+          case 2:
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => BuscarScreen()), // Cambiar a DemoSwip
+            );
+            break;
+        }
+      },
     );
   }
 }
