@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:influmeet/custom_bottom_navigation_bar.dart';
 
 class BuscarPage extends StatelessWidget {
   @override
@@ -61,9 +62,9 @@ class BuscarScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: purpleColor, // Cambia el color de fondo del Scaffold
+      backgroundColor: purpleColor,
       appBar: AppBar(
-        backgroundColor: yellowColor, // Cambia el color del AppBar
+        backgroundColor: yellowColor,
         title: Text('Buscar'),
       ),
       body: ListView.builder(
@@ -78,6 +79,7 @@ class BuscarScreen extends StatelessWidget {
           );
         },
       ),
+      bottomNavigationBar: CustomBottomNavigationBar(selectedIndex: 2),
     );
   }
 }
@@ -116,7 +118,7 @@ class SectionCard extends StatelessWidget {
               ),
             ),
             Container(
-              color: backgroundColor.withOpacity(0.7), // Ajusta la opacidad para hacer el fondo más claro
+              color: backgroundColor.withOpacity(0.7),
               padding: EdgeInsets.all(10.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
