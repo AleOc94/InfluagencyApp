@@ -17,12 +17,35 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class SwipeoInfluencers extends StatefulWidget {
+class SwipeoInfluencers extends StatelessWidget {
   @override
-  _SwipeoInfluencersState createState() => _SwipeoInfluencersState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Inicio'),
+        backgroundColor: Color.fromARGB(255, 255, 214, 90),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => DemoSwipe()),
+            );
+          },
+          child: Text('Go to DemoSwipe'),
+        ),
+      ),
+    );
+  }
 }
 
-class _SwipeoInfluencersState extends State<SwipeoInfluencers> {
+class DemoSwipe extends StatefulWidget {
+  @override
+  _DemoSwipeState createState() => _DemoSwipeState();
+}
+
+class _DemoSwipeState extends State<DemoSwipe> {
   List<String> images = [
     'assets/images/jp.png',
     'assets/images/hg.png',
@@ -152,7 +175,7 @@ class _SwipeoInfluencersState extends State<SwipeoInfluencers> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Swipe Example'),
+        title: Text('Incio'),
         backgroundColor: Color.fromARGB(255, 255, 214, 90),
         actions: [
           IconButton(
