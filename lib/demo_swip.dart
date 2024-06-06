@@ -3,7 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tcard/tcard.dart';
 import 'package:flip_card/flip_card.dart';
 import 'brand_profile.dart'; // Importa la pantalla de perfil
-import 'main.dart'; 
+import 'main.dart';
 import 'buscar.dart'; // Importa la pantalla de buscar
 
 void main() => runApp(MyApp());
@@ -12,60 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: DemoSwip(),
-    );
-  }
-}
-
-class DemoSwip extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Home'),
-        backgroundColor: Color.fromARGB(255, 255, 214, 90),
-      ),
-      drawer: Drawer( // Agrega un drawer (menú lateral)
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 255, 214, 90),
-              ),
-              child: Text(
-                'Menú',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 24,
-                ),
-              ),
-            ),
-            ListTile(
-              title: Text('Home'),
-              onTap: () {
-                Navigator.pop(context); // Cierra el drawer
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => DemoSwip()),
-                );
-              },
-            ),
-            ListTile(
-              title: Text('Buscar'),
-              onTap: () {
-                Navigator.pop(context); // Cierra el drawer
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => BuscarScreen()),
-                );
-              },
-            ),
-            // Puedes agregar más elementos de menú aquí
-          ],
-        ),
-      ),
-      bottomNavigationBar: CustomBottomNavigationBar(selectedIndex: 0),
+      home: DemoSwipe(),
     );
   }
 }
@@ -247,7 +194,7 @@ class _DemoSwipeState extends State<DemoSwipe> {
                             if (info.direction == SwipDirection.Right) {
                               handleSwipe(true);
                             } else if (info.direction == SwipDirection.Left) {
-                            handleSwipe(false);
+                              handleSwipe(false);
                             }
                           },
                           onEnd: () {
